@@ -1,0 +1,32 @@
+{
+"gameglobals":
+  [
+    {"fps" : 60,
+     "resolution" : [640,480]
+    }
+  ],
+"player":
+  [
+    {"type" : "sprites.player",
+     "image":"gamedata/images/ball.png", 
+     "position":[300,450]
+    }
+  ],
+
+"block1":
+  [
+    {"type" : "sprites.obstacle",
+     "image":"gamedata/images/block.png", 
+     "position":[100,200]
+    }
+  ],
+"block2":
+  [
+    {"type" : "sprites.obstacle",
+     "image":"gamedata/images/block.png", 
+     "position":[50,300]
+    }
+  ]
+
+}
+
