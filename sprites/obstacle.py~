@@ -9,7 +9,10 @@ class Obstacle(gamesprite.GameSprite):
         ''' Initializes the obstacle sprite '''
 
         super(Obstacle, self).__init__(filename, position, world_dim, *groups)
-
+        '''self.world_dim = world_dim
+        self.image = pygame.image.load(filename)
+        self.image = pygame.transform.scale(self.image, (100,100))
+        self.rect = pygame.rect.Rect(position, self.image.get_size())'''
         self.offset_x = 50
 	self.offset_y = 20
 

@@ -24,7 +24,8 @@
   [
     {"type" : "sprites.player",
      "image":"gamedata/images/ball.png", 
-     "position":[300,450]
+     "position":[300,450],
+     "resolution" : [1280,800]
     }
   ]
 

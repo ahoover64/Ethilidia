@@ -34,25 +34,21 @@ class GameData():
 
             ''' return objects from json data '''
             objects = defaultdict(list)
-
+            
 
             for entry in self.json_scene:
                 if entry == "gameglobals":
-                    for i in range(0,len(self.json_scene[entry])):
-                        print self.json_scene[entry][i]
-                        for gglobal in self.json_scene[entry][i]:
-                            print self.json_scene[entry][i][gglobal]
-                            self.game_globals[gglobal] = self.json_scene[entry][i][gglobal]
-
-            for entry in self.json_scene:
-              if entry != "gameglobals":
+                    for gglobal in self.json_scene[entry][i]:
+                        self.game_globals[gglobal] = self.json_scene[entry][i][gglobal]
+                else:
                     for i in range(0,len(self.json_scene[entry])):
                         try:
                             if self.json_scene[entry][i]['type'] == "sprites.player":
-                                p = sprites.player.Player(self.json_scene[entry][i]['image'],
-                                                        self.json_scene[entry][i]['position'],
-                                                        self.game_globals['resolution'],
-                                                        self.sprite_group)
+				try:
+                                    p = sprites.player.Player(self.json_scene[entry][i]['image'], self.json_scene[entry][i]['position'], self.json_scene[entry][i]['resolution'],self.sprite_group)
+				    print "player test"
+			        except:
+				    print "Failed to create player"
                                 new_obj = {entry:p}
                                 objects[entry].append(p)
 
@@ -63,7 +59,6 @@ class GameData():
                                                         self.sprite_group)
                                 new_obj = {entry:o}
                                 objects[entry].append(o)
-
                         except:
                             pass
 
