@@ -60,6 +60,7 @@ class GameData():
                                 o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
                                                         self.json_scene[entry][i]['position'],
                                                         self.game_globals['resolution'],
+                                                        self.json_scene[entry][i]['size'],
                                                         self.sprite_group)
                                 new_obj = {entry:o}
                                 objects[entry].append(o)

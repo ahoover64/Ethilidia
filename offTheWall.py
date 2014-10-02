@@ -2,7 +2,7 @@ import pygame
 import sprites.player
 import sprites.obstacle
 import utils.gamedata
-
+import camera
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
@@ -21,16 +21,21 @@ class OffTheWall(object):
         ''' Main function for the game '''
 
         sprite_group = pygame.sprite.Group()
-        game_data = utils.gamedata.GameData('gamedata/game.json', sprite_group)
+        game_data = utils.gamedata.GameData('gamedata/level1.json', sprite_group)
         game_data_obj = game_data.dictToObjects()
-        self.player = game_data_obj['sprites.player']
-        self.obstacle = game_data_obj['sprites.obstacle']
+        self.player = game_data.player
+        
 
         
         
         self.screen = pygame.display.set_mode(game_data.getGameGlobals()['resolution'])
+        FULL_MAP_WIDTH = game_data.getGameGlobals()['maprect'][0]
+        FULL_MAP_HEIGHT = game_data.getGameGlobals()['maprect'][1]
+        WIN_WIDTH = game_data.getGameGlobals()['resolution'][0]
+        WIN_HEIGHT = game_data.getGameGlobals()['resolution'][1]
+        screen_camera = camera.Camera(camera.complex_camera,FULL_MAP_WIDTH,FULL_MAP_HEIGHT,WIN_WIDTH,WIN_HEIGHT)
         clock = pygame.time.Clock()
-        self.background = pygame.transform.scale(pygame.image.load(game_data.getGameGlobals()['backgroundimage']), game_data.getGameGlobals()['resolution'])
+        self.background = pygame.transform.scale(pygame.image.load(game_data.getGameGlobals()['backgroundimage']), game_data.getGameGlobals()['maprect'])
         basicfont = pygame.font.SysFont(None, 48)
         text = basicfont.render('Off The Wall!', True, (255,0,0))
         textrect = text.get_rect()
@@ -54,13 +59,11 @@ class OffTheWall(object):
             timeTextRect.centerx = 60
             timeTextRect.centery = 80
 
-            sprite_group.update()
-
-            self.screen.blit(self.background,(0,0))
-            sprite_group.draw(self.screen)
-            self.screen.blit(text, textrect)
-            self.screen.blit(fpsText,fpsTextRect)
-            self.screen.blit(timeText,timeTextRect)
+            sprite_group.update(sprite_group)
+            screen_camera.update(self.player)
+            self.screen.blit(self.background,screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
+            for e in sprite_group.sprites():
+                self.screen.blit(e.image,screen_camera.apply(e.rect))
             pygame.display.flip()
 
 if __name__ == '__main__':

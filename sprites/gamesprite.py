@@ -6,11 +6,11 @@ class GameSprite(pygame.sprite.Sprite):
         a sprite across the screen with the arrow keys
     '''
 
-    def __init__(self, filename, position, world_dim, *groups):
+    def __init__(self, filename, position, world_dim, rectangle, *groups):
 
         ''' Initializes the player sprite '''
         super(GameSprite, self).__init__(*groups)
         self.world_dim = world_dim
         self.image = pygame.image.load(filename)
-        self.image = pygame.transform.scale(self.image, (100,100))
+        self.image = pygame.transform.scale(self.image, rectangle)
         self.rect = pygame.rect.Rect(position, self.image.get_size())

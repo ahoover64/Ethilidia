@@ -3,7 +3,6 @@
   [
     {"fps" : 60,
      "resolution" : [1280,800],
-     "maprect" : [2560,1600],
      "backgroundimage":"gamedata/images/gamebackground.jpg"
     }
   ],

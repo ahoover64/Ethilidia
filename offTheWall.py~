@@ -21,14 +21,14 @@ class OffTheWall(object):
         ''' Main function for the game '''
 
         sprite_group = pygame.sprite.Group()
-        game_data = utils.gamedata.GameData('gamedata/game.json', sprite_group)
+        game_data = utils.gamedata.GameData('gamedata/level1.json', sprite_group)
         game_data_obj = game_data.dictToObjects()
         self.player = game_data_obj['sprites.player']
         self.obstacle = game_data_obj['sprites.obstacle']
 
         
         
-        self.screen = pygame.display.set_mode(game_data.getGameGlobals()['resolution'])
+        self.screen = pygame.display.set_mode(game_data.getGameGlobals()['maprect'])
         clock = pygame.time.Clock()
         self.background = pygame.transform.scale(pygame.image.load(game_data.getGameGlobals()['backgroundimage']), game_data.getGameGlobals()['resolution'])
         basicfont = pygame.font.SysFont(None, 48)
@@ -58,9 +58,6 @@ class OffTheWall(object):
 
             self.screen.blit(self.background,(0,0))
             sprite_group.draw(self.screen)
-            self.screen.blit(text, textrect)
-            self.screen.blit(fpsText,fpsTextRect)
-            self.screen.blit(timeText,timeTextRect)
             pygame.display.flip()
 
 if __name__ == '__main__':

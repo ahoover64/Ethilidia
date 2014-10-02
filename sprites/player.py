@@ -1,5 +1,6 @@
 import pygame 
 import gamesprite
+import spritesheet
 class Player(gamesprite.GameSprite):
 
     ''' Simple player class which allows you to move
@@ -9,13 +10,42 @@ class Player(gamesprite.GameSprite):
     def __init__(self, filename, position, world_dim, *groups):
 
         ''' Initializes the player sprite '''
-        super(Player, self).__init__(filename, position, world_dim, *groups)
-
+        super(Player, self).__init__(filename, position, world_dim,(100,100), *groups)
+        self.ss = spritesheet.spritesheet("sprites/../gamedata/images/spritesheet.jpg")
+        self.rows = 2
+        self.cols = 4
+        self.width = 125
+        self.height = 125
+        self.images = []
+	self.images = self.spritesheetToImages(self.ss,self.rows,self.cols,self.width,self.height)
+        self.image = self.images[0]
+        self.image = pygame.transform.scale(self.image, (100,100))
+        self.i = 0
+        self.maxi = len(self.images)
+        self.ticks = 60/self.maxi
+        self.ticki = 0
+    def spritesheetToImages(self, tempss, rows, cols, width, height):
+        self.tempimages = []
+        for y in range(0,rows):
+            for x in range(0,cols):
+                self.tempimages.append(tempss.image_at((x*width, y*height, width, height)))
+        return self.tempimages
+    def next(self):
+        self.i += 1
+        if(self.i == self.maxi):
+            self.i = 0
+        self.image = self.images[self.i]
+        self.image = pygame.transform.scale(self.image, (100,100))
     def update(self):
 
         ''' Moves the player sprite across the screen
             with arrow keys
         '''
+        self.ticki += 1
+        if(self.ticki==self.ticks):
+            self.ticki = 0
+            self.next()
+
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
             self.rect.x -= 10

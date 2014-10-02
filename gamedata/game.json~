@@ -3,6 +3,7 @@
   [
     {"fps" : 60,
      "resolution" : [1280,800],
+     "maprect" : [2560,1600],
      "backgroundimage":"gamedata/images/gamebackground.jpg"
     }
   ],
@@ -10,22 +11,31 @@
   [
     {"type" : "sprites.obstacle",
      "image":"gamedata/images/block.png", 
-     "position":[150,200]
+     "position":[150,200],
+     "size":[100,100]
     }
   ],
 "block2":
   [
     {"type" : "sprites.obstacle",
      "image":"gamedata/images/block.png", 
-     "position":[50,300]
+     "position":[500,300],
+     "size":[200,200]
+    }
+  ],
+"block3":
+  [
+    {"type" : "sprites.obstacle",
+     "image":"gamedata/images/block.png", 
+     "position":[300,700],
+     "size":[200,50]
     }
   ],
 "player":
   [
     {"type" : "sprites.player",
      "image":"gamedata/images/ball.png", 
-     "position":[300,450],
-     "resolution" : [1280,800]
+     "position":[300,450]
     }
   ]
 
