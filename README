@@ -1,8 +1,16 @@
-Off The Wall
+Michael Ott + Jeffrey Chen
 
-A simple game which demos the basics of pygame
+Mix of an rpg and a strategy game where you do the typical rpg things but you build up a force
+of mercenaries to conquer new territories and eventually win the game
 
-Michael Ott
-Gravity and bouncing for the Obstacles
+1st week - 
+	features-
+		implemented collisions
+		implemented camera movement
+		changed sprites to be resized in json
+        not implemented-
+		trouble uploading new sprites to github
+
+on my honor I have neither given nor recieved help on this project
 
 
