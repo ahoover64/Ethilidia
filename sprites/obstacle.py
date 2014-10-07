@@ -10,7 +10,7 @@ class Obstacle(gamesprite.GameSprite):
 
         super(Obstacle, self).__init__(filename, position, world_dim, rectangle, *groups)
          
-    def update(self):
-
+    def update(self,game_sprites):
+        pass
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
 

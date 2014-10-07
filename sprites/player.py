@@ -36,11 +36,12 @@ class Player(gamesprite.GameSprite):
             self.i = 0
         self.image = self.images[self.i]
         self.image = pygame.transform.scale(self.image, (100,100))
-    def update(self):
+    def update(self, game_sprites):
 
         ''' Moves the player sprite across the screen
             with arrow keys
         '''
+        self.previous = self.rect.copy()
         self.ticki += 1
         if(self.ticki==self.ticks):
             self.ticki = 0
@@ -64,4 +65,19 @@ class Player(gamesprite.GameSprite):
             self.rect.y = self.world_dim[1] - self.rect.height
         if self.rect.y < 0:
             self.rect.y = 0
+
+        other_sprites = game_sprites.copy()
+        if other_sprites.has(self):
+            other_sprites.remove(self)
+        for cell in pygame.sprite.spritecollide(self,other_sprites,False):
+            if self.previous.x + self.previous.width <= cell.rect.x:
+                self.rect.x = self.previous.x
+            if self.previous.y + self.previous.height <= cell.rect.y:
+                self.rect.y = self.previous.y
+            if self.previous.x >= cell.rect.x + cell.rect.width:
+                self.rect.x = self.previous.x
+            if self.previous.y >= cell.rect.y + cell.rect.height:
+                self.rect.y = self.previous.y
+            
+            
 
