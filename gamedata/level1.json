@@ -2,13 +2,22 @@
 "gameglobals":
   [
     {"fps" : 60,
-     "resolution" : [1280,800],
-     "backgroundimage":"gamedata/images/gamebackground.jpg"
+     "resolution" : [1280,720],
+     "maprect" : [2000,1500],
+     "backgroundimage":"gamedata/images/gamebackground2.jpg"
+    }
+  ],
+"player":
+  [
+    {"type" : "sprites.player",
+     "image":"gamedata/images/ball.png", 
+     "position":[300,450]
     }
   ],
 "block1":
   [
     {"type" : "sprites.obstacle",
+     "randomize" : false,
      "image":"gamedata/images/block.png", 
      "position":[150,200],
      "size":[100,100]
@@ -17,24 +26,20 @@
 "block2":
   [
     {"type" : "sprites.obstacle",
+     "randomize" : false,
      "image":"gamedata/images/block.png", 
-     "position":[500,300],
-     "size":[200,200]
+     "position":[250,240],
+     "size":[100,100]
     }
   ],
 "block3":
   [
     {"type" : "sprites.obstacle",
+     "randomize" : true,
+     "number" : 3,
      "image":"gamedata/images/block.png", 
-     "position":[300,700],
-     "size":[200,50]
-    }
-  ],
-"player":
-  [
-    {"type" : "sprites.player",
-     "image":"gamedata/images/ball.png", 
-     "position":[300,450]
+     "randomrect" : [0,0,2000,720],
+     "size":[200,200]
     }
   ]
 
