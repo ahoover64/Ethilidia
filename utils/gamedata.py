@@ -51,17 +51,19 @@ class GameData():
                             if self.json_scene[entry][i]['type'] == "sprites.player":
                                 p = sprites.player.Player(self.json_scene[entry][i]['image'],
                                                         self.json_scene[entry][i]['position'],
-                                                        self.game_globals['resolution'],
+                                                        self.game_globals['maprect'],
                                                         self.sprite_group)
+                                self.player = p
                                 new_obj = {entry:p}
                                 objects[entry].append(p)
 
                             elif self.json_scene[entry][i]['type'] == "sprites.obstacle":
                                 o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
                                                         self.json_scene[entry][i]['position'],
-                                                        self.game_globals['resolution'],
+                                                        self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['size'],
                                                         self.sprite_group)
+                                
                                 new_obj = {entry:o}
                                 objects[entry].append(o)
 
