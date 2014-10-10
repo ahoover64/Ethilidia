@@ -2,7 +2,7 @@ import pygame
 import sprites.player
 import sprites.obstacle
 import utils.gamedata
-import camera
+import utils.camera as camera
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
