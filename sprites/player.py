@@ -78,6 +78,8 @@ class Player(gamesprite.GameSprite):
                 self.rect.x = self.previous.x
             if self.previous.y >= cell.rect.y + cell.rect.height:
                 self.rect.y = self.previous.y
-            
+        if len(pygame.sprite.spritecollide(self,other_sprites,False)) > 0:
+            self.rect = self.previous
+
             
 

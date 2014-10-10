@@ -17,29 +17,37 @@
 "block1":
   [
     {"type" : "sprites.obstacle",
-     "randomize" : false,
+     "number" : 1,
      "image":"gamedata/images/block.png", 
-     "position":[150,200],
+     "randomrect" : [150,200,250,300],
      "size":[100,100]
     }
   ],
 "block2":
   [
     {"type" : "sprites.obstacle",
-     "randomize" : false,
+     "number" : 1,
      "image":"gamedata/images/block.png", 
-     "position":[250,240],
+     "randomrect" : [250,240,350,340],
      "size":[100,100]
     }
   ],
 "block3":
   [
     {"type" : "sprites.obstacle",
-     "randomize" : true,
      "number" : 3,
      "image":"gamedata/images/block.png", 
-     "randomrect" : [0,0,2000,720],
+     "randomrect" : [1000,1000,2000,1500],
      "size":[200,200]
+    }
+  ],
+"block4":
+  [
+    {"type" : "sprites.obstacle",
+     "number" : 20,
+     "image":"gamedata/images/block.png", 
+     "randomrect" : [0,0,2000,1500],
+     "size":[50,50]
     }
   ]
 

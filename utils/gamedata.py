@@ -1,6 +1,7 @@
 import sys
 import json
 import pygame
+import random
 import sprites.player
 import sprites.obstacle
 from collections import defaultdict
@@ -30,6 +31,16 @@ class GameData():
         def __getGameGlobals__(self):
             return self.game_globals
 
+	def randomPosition(self, rr, rs):
+            rp = [0,0]
+            if rr[2]-rr[0] == rs[0] and rr[3]-rr[1] == rs[1]:
+	        rp[0] = rr[0]
+                rp[1] = rr[1]
+            else:
+	        rp[0] = random.randrange(rr[0],rr[2]-rs[0],10)
+	        rp[1] = random.randrange(rr[1],rr[3]-rs[1],10)
+	    return rp
+
         def __dictToObjects__(self):
 
             ''' return objects from json data '''
@@ -39,9 +50,7 @@ class GameData():
             for entry in self.json_scene:
                 if entry == "gameglobals":
                     for i in range(0,len(self.json_scene[entry])):
-                        print self.json_scene[entry][i]
                         for gglobal in self.json_scene[entry][i]:
-                            print self.json_scene[entry][i][gglobal]
                             self.game_globals[gglobal] = self.json_scene[entry][i][gglobal]
 
             for entry in self.json_scene:
@@ -58,21 +67,26 @@ class GameData():
                                 objects[entry].append(p)
 
                             elif self.json_scene[entry][i]['type'] == "sprites.obstacle":
-                                o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
-                                                        self.json_scene[entry][i]['position'],
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'])
+                                    o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
+                                                        randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['size'],
                                                         self.sprite_group)
                                 
-                                new_obj = {entry:o}
-                                objects[entry].append(o)
+                                    new_obj = {entry:o}
+                                    objects[entry].append(o)
 
-                        except:
+                        except ValueError:
+                            print ValueError
                             pass
 
             return objects
 
     instance = None
+
+    
 
     def __init__(self, arg, sprite_group):
         if not GameData.instance:
