@@ -4,6 +4,7 @@ import sprites.obstacle
 import sprites.healthsprite
 import utils.gamedata
 import utils.camera as camera
+import utils.soundplayer
 
 class OffTheWall(object):
 
@@ -38,6 +39,7 @@ class OffTheWall(object):
             if isinstance(cell,sprites.healthsprite.HealthSprite):
                 if cell.dead:
                     self.sprite_group.remove(cell)
+                    self.soundplayer.playsound("death")
     def drawhealth(self,cell):
         if isinstance(cell,sprites.healthsprite.HealthSprite):
             temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)
@@ -46,13 +48,18 @@ class OffTheWall(object):
             
             pygame.draw.rect(self.screen,(255-colorvalue,colorvalue,0),self.screen_camera.apply(temprect2))
             pygame.draw.rect(self.screen,(0,0,0),self.screen_camera.apply(temprect),2)
+    def setupsounds(self):
+        self.soundplayer = utils.soundplayer.SoundPlayer()
+        self.soundplayer.addsound("utils/Sounds/hit.wav","hit")
+        self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
+        self.soundplayer.playmusic("utils/Sounds/testsound.wav")
     def main(self, screen):
 
         ''' Main function for the game '''
 
         self.generatemap('gamedata/level1.json')
         
-        
+        self.setupsounds()
         clock = pygame.time.Clock()
         basicfont = pygame.font.SysFont(None, 48)
 
@@ -71,8 +78,7 @@ class OffTheWall(object):
                     if event.key is pygame.K_2:
                         self.generatemap('gamedata/level2.json')
 
-
-            self.sprite_group.update(self.sprite_group)
+            self.sprite_group.update(self.sprite_group,self.soundplayer)
             self.checkdeath()
             self.screen_camera.update(self.player)
             self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))

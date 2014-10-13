@@ -5,6 +5,7 @@ import collisionsprite
 import healthsprite
 import math
 import utils.camera
+import utils.soundplayer
 class Player(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
 
     ''' Simple player class which allows you to move
@@ -53,14 +54,17 @@ class Player(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
         norm = math.sqrt(tempx*tempx+tempy*tempy)
         normx = tempx/norm
         normy = tempy/norm
-        rect = pygame.Rect(normx*25-10,normy*25-10,20,20)
+        rect = pygame.Rect(normx*50-25,normy*50-25,50,50)
         rect.x += self.rect.x+self.rect.width/2
         rect.y += self.rect.y+self.rect.height/2
+        hit = False
         for cell in game_sprites:
             if isinstance(cell,healthsprite.HealthSprite) and not cell == self:
                 if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
                     cell.damage(20)
-    def update(self, game_sprites):
+                    hit = True
+        return hit
+    def update(self, game_sprites,soundplayer):
 
         ''' Moves the player sprite across the screen
             with arrow keys
@@ -83,12 +87,17 @@ class Player(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
 
         m1,_,_ = pygame.mouse.get_pressed()
         mx,my = pygame.mouse.get_pos()
+        hit = False
         if m1:
             if self.clicking == False:
-                self.swingatmouse(mx,my,game_sprites)
+                hit = self.swingatmouse(mx,my,game_sprites)
             self.clicking = True
         else:
             self.clicking = False
+        if hit:
+            soundplayer.playsound("hit")
+        else:
+            pass
         self.checkEdgeCollisions()
         self.checkCollisions(game_sprites)
         

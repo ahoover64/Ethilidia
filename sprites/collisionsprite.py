@@ -1,6 +1,7 @@
 import pygame 
 import gamesprite
 import obstacle
+import utils.soundplayer
 class CollisionSprite(gamesprite.GameSprite):
 
     ''' Simple object that moves left and right across the screen '''
@@ -41,7 +42,7 @@ class CollisionSprite(gamesprite.GameSprite):
         for cell in pygame.sprite.spritecollide(self,other_sprites,False):
             if isinstance(cell,obstacle.Obstacle):
                 self.rect = self.previous     
-    def update(self,game_sprites):
+    def update(self,game_sprites,soundplayer):
         pass
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
 

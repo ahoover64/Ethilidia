@@ -5,6 +5,7 @@ import collisionsprite
 import player
 import math
 import healthsprite
+import utils.soundplayer
 class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
 
     ''' Simple object that moves left and right across the screen '''
@@ -27,7 +28,7 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
         dy = y1-y2
         d = math.sqrt(dx*dx+dy*dy)
         return d
-    def update(self,game_sprites):
+    def update(self,game_sprites,soundplayer):
         
         
         self.previous = self.rect.copy()
