@@ -17,7 +17,11 @@ on my honor I have neither given nor recieved help on this project
         features-
 		implemented sound
                 implemented enemies
-                implemented switching areas
+                implemented switching areas (using number keys)
                 implemented health + combat
                 added house images and enemy images and background image
+                camera size set in json
+        not implemented-
+                new top-down player sprite
+                
 
