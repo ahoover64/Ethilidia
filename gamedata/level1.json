@@ -4,13 +4,13 @@
     {"fps" : 60,
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
-     "backgroundimage":"pictures/map.png"
+     "backgroundimage":"gamedata/pictures/map.png"
     }
   ],
 "player":
   [
     {"type" : "sprites.player",
-     "image":"pictures/topDownSpriteSheet.png", 
+     "image":"gamedata/images/ball.png", 
      "position":[117,117]
     }
   ],
@@ -18,7 +18,7 @@
   [
     {"type" : "sprites.obstacle",
      "number" : 10,
-     "image":"pictures/house.png", 
+     "image":"gamedata/pictures/house.png", 
      "randomrect" : [150,150,2000,1500],
      "size":[150,150]
     }

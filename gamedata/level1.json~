@@ -10,26 +10,17 @@
 "player":
   [
     {"type" : "sprites.player",
-     "image":"gamedata/images/ball.png", 
-     "position":[50,50]
+     "image":"pictures/topDownSpriteSheet.png", 
+     "position":[117,117]
     }
   ],
 "blocks":
   [
     {"type" : "sprites.obstacle",
-     "number" : 30,
+     "number" : 10,
      "image":"gamedata/pictures/house.png", 
      "randomrect" : [150,150,2000,1500],
-     "size":[50,50]
-    }
-  ],
-"enemy":
-  [
-    {"type" : "sprites.enemy",
-     "number" : 50,
-     "image":"gamedata/pictures/fighter.png", 
-     "randomrect" : [500,500,2000,1500],
-     "size":[50,50]
+     "size":[150,150]
     }
   ]
 }
