@@ -4,7 +4,7 @@
     {"fps" : 60,
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
-     "backgroundimage":"gamedata/images/gamebackground.jpg"
+     "backgroundimage":"pictures/map.png"
     }
   ],
 "player":
@@ -27,7 +27,7 @@
   [
     {"type" : "sprites.enemy",
      "number" : 50,
-     "image":"gamedata/images/ball.png", 
+     "image":"pictures/fighter.png", 
      "randomrect" : [500,500,2000,1500],
      "size":[50,50]
     }
