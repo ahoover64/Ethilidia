@@ -4,7 +4,7 @@
     {"fps" : 60,
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
-     "backgroundimage":"pictures/map.png"
+     "backgroundimage":"gamedata/pictures/map.png"
     }
   ],
 "player":
@@ -18,7 +18,7 @@
   [
     {"type" : "sprites.obstacle",
      "number" : 30,
-     "image":"pictures/house.png", 
+     "image":"gamedata/pictures/house.png", 
      "randomrect" : [150,150,2000,1500],
      "size":[50,50]
     }
@@ -27,7 +27,7 @@
   [
     {"type" : "sprites.enemy",
      "number" : 50,
-     "image":"pictures/fighter.png", 
+     "image":"gamedata/pictures/fighter.png", 
      "randomrect" : [500,500,2000,1500],
      "size":[50,50]
     }
