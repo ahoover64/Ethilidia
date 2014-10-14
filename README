@@ -3,6 +3,8 @@ Michael Ott + Jeffrey Chen
 Mix of an rpg and a strategy game where you do the typical rpg things but you build up a force
 of mercenaries to conquer new territories and eventually win the game
 
+on my honor I have neither given nor recieved help on this project
+
 1st week - 
 	features-
 		implemented collisions
@@ -11,6 +13,11 @@ of mercenaries to conquer new territories and eventually win the game
         not implemented-
 		trouble uploading new sprites to github
 
-on my honor I have neither given nor recieved help on this project
-
+2nd week -
+        features-
+		implemented sound
+                implemented enemies
+                implemented switching areas
+                implemented health + combat
+                added house images and enemy images and background image
 
