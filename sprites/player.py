@@ -1,7 +1,12 @@
 import pygame 
 import gamesprite
 import spritesheet
-class Player(gamesprite.GameSprite):
+import collisionsprite
+import healthsprite
+import math
+import utils.camera
+import utils.soundplayer
+class Player(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
 
     ''' Simple player class which allows you to move
         a sprite across the screen with the arrow keys
@@ -10,7 +15,8 @@ class Player(gamesprite.GameSprite):
     def __init__(self, filename, position, world_dim, *groups):
 
         ''' Initializes the player sprite '''
-        super(Player, self).__init__(filename, position, world_dim,(100,100), *groups)
+        super(Player, self).__init__(filename, position, world_dim,(50,50), *groups)
+        healthsprite.HealthSprite.__init__(self,100)
         self.ss = spritesheet.spritesheet("sprites/../gamedata/images/spritesheet.jpg")
         self.rows = 2
         self.cols = 4
@@ -19,11 +25,12 @@ class Player(gamesprite.GameSprite):
         self.images = []
 	self.images = self.spritesheetToImages(self.ss,self.rows,self.cols,self.width,self.height)
         self.image = self.images[0]
-        self.image = pygame.transform.scale(self.image, (100,100))
+        self.image = pygame.transform.scale(self.image, (50,50))
         self.i = 0
         self.maxi = len(self.images)
         self.ticks = 60/self.maxi
         self.ticki = 0
+        self.clicking = False
     def spritesheetToImages(self, tempss, rows, cols, width, height):
         self.tempimages = []
         for y in range(0,rows):
@@ -35,8 +42,29 @@ class Player(gamesprite.GameSprite):
         if(self.i == self.maxi):
             self.i = 0
         self.image = self.images[self.i]
-        self.image = pygame.transform.scale(self.image, (100,100))
-    def update(self, game_sprites):
+        self.image = pygame.transform.scale(self.image, (50,50))
+    def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
+        self.screen_camera = utils.camera.Camera(utils.camera.complex_camera,self.world_dim[0],self.world_dim[1],WIN_WIDTH,WIN_HEIGHT)
+    def swingatmouse(self,mx,my,game_sprites):
+        self.screen_camera.update(self)
+        shiftrect = pygame.Rect(mx,my,0,0)
+        shiftrect = self.screen_camera.backapply(shiftrect)
+        tempx = shiftrect.x-(self.rect.x+self.rect.width/2)
+        tempy = shiftrect.y-(self.rect.y+self.rect.height/2)
+        norm = math.sqrt(tempx*tempx+tempy*tempy)
+        normx = tempx/norm
+        normy = tempy/norm
+        rect = pygame.Rect(normx*50-25,normy*50-25,50,50)
+        rect.x += self.rect.x+self.rect.width/2
+        rect.y += self.rect.y+self.rect.height/2
+        hit = False
+        for cell in game_sprites:
+            if isinstance(cell,healthsprite.HealthSprite) and not cell == self:
+                if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
+                    cell.damage(20)
+                    hit = True
+        return hit
+    def update(self, game_sprites,soundplayer):
 
         ''' Moves the player sprite across the screen
             with arrow keys
@@ -48,38 +76,30 @@ class Player(gamesprite.GameSprite):
             self.next()
 
         key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]:
+        if key[pygame.K_LEFT] or key[pygame.K_a]:
             self.rect.x -= 10
-        if key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT] or key[pygame.K_d]:
             self.rect.x += 10
-        if key[pygame.K_UP]:
+        if key[pygame.K_UP] or key[pygame.K_w]:
             self.rect.y -= 10
-        if key[pygame.K_DOWN]:
+        if key[pygame.K_DOWN] or key[pygame.K_s]:
             self.rect.y += 10
 
-        if self.rect.x + self.rect.width > self.world_dim[0]:
-            self.rect.x = self.world_dim[0] - self.rect.width
-        if self.rect.x < 0:
-            self.rect.x = 0
-        if self.rect.y + self.rect.height > self.world_dim[1]:           
-            self.rect.y = self.world_dim[1] - self.rect.height
-        if self.rect.y < 0:
-            self.rect.y = 0
-
-        other_sprites = game_sprites.copy()
-        if other_sprites.has(self):
-            other_sprites.remove(self)
-        for cell in pygame.sprite.spritecollide(self,other_sprites,False):
-            if self.previous.x + self.previous.width <= cell.rect.x:
-                self.rect.x = self.previous.x
-            if self.previous.y + self.previous.height <= cell.rect.y:
-                self.rect.y = self.previous.y
-            if self.previous.x >= cell.rect.x + cell.rect.width:
-                self.rect.x = self.previous.x
-            if self.previous.y >= cell.rect.y + cell.rect.height:
-                self.rect.y = self.previous.y
-        if len(pygame.sprite.spritecollide(self,other_sprites,False)) > 0:
-            self.rect = self.previous
-
+        m1,_,_ = pygame.mouse.get_pressed()
+        mx,my = pygame.mouse.get_pos()
+        hit = False
+        if m1:
+            if self.clicking == False:
+                hit = self.swingatmouse(mx,my,game_sprites)
+            self.clicking = True
+        else:
+            self.clicking = False
+        if hit:
+            soundplayer.playsound("hit")
+        else:
+            pass
+        self.checkEdgeCollisions()
+        self.checkCollisions(game_sprites)
+        
             
 

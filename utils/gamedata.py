@@ -4,6 +4,7 @@ import pygame
 import random
 import sprites.player
 import sprites.obstacle
+import sprites.enemy
 from collections import defaultdict
 
 class GameData():
@@ -40,7 +41,25 @@ class GameData():
 	        rp[0] = random.randrange(rr[0],rr[2]-rs[0],10)
 	        rp[1] = random.randrange(rr[1],rr[3]-rs[1],10)
 	    return rp
-
+        def randomOpenPosition(self, rr, rs, sprite_group, ignored=[]):
+            done = False
+            while not done:
+                randompos = self.randomPosition(rr,rs)
+                tr = pygame.Rect(randompos[0],randompos[1],rs[0],rs[1])
+                if not self.isColliding(tr,sprite_group,ignored):
+                    done = True
+            return randompos
+        def isColliding(self,rect,sprite_group,ignored):
+            for cell in sprite_group:
+                if not self.listInstance(cell,ignored):
+                    if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
+                        return True
+            return False
+        def listInstance(self,cell,instances):
+            for classdata in instances:
+                if isinstance(cell,classdata):
+                    return True
+            return False
         def __dictToObjects__(self):
 
             ''' return objects from json data '''
@@ -68,7 +87,7 @@ class GameData():
 
                             elif self.json_scene[entry][i]['type'] == "sprites.obstacle":
                                 for j in range(self.json_scene[entry][i]['number']):
-                                    randomp = self.randomPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'])
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group,[sprites.obstacle.Obstacle])
                                     o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
@@ -77,6 +96,18 @@ class GameData():
                                 
                                     new_obj = {entry:o}
                                     objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.enemy":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    e = sprites.enemy.Enemy(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    new_obj = {entry:e}
+                                    objects[entry].append(e)
 
                         except ValueError:
                             print ValueError
@@ -89,10 +120,10 @@ class GameData():
     
 
     def __init__(self, arg, sprite_group):
-        if not GameData.instance:
-            GameData.instance = GameData.__GameData(arg, sprite_group)
-        else:
-            GameData.instance.val = arg
+        '''if not GameData.instance:'''
+        GameData.instance = GameData.__GameData(arg, sprite_group)
+        '''else:
+            GameData.instance.val = arg'''
 
     def __getattr__(self, name):
         return getattr(self.instance, name)

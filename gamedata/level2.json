@@ -4,7 +4,7 @@
     {"fps" : 60,
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
-     "backgroundimage":"gamedata/images/gamebackground2.jpg"
+     "backgroundimage":"gamedata/images/gamebackground.jpg"
     }
   ],
 "player":
@@ -17,10 +17,19 @@
 "blocks":
   [
     {"type" : "sprites.obstacle",
-     "number" : 10,
+     "number" : 30,
      "image":"gamedata/images/block.png", 
      "randomrect" : [150,150,2000,1500],
-     "size":[150,150]
+     "size":[50,50]
+    }
+  ],
+"enemy":
+  [
+    {"type" : "sprites.enemy",
+     "number" : 50,
+     "image":"gamedata/images/ball.png", 
+     "randomrect" : [500,500,2000,1500],
+     "size":[50,50]
     }
   ]
 }

@@ -10,7 +10,8 @@ class Camera(object):
 
     def apply(self, targetrect):
         return targetrect.move(self.state.topleft)
-
+    def backapply(self, targetrect):
+        return targetrect.move(-self.state.x,-self.state.y)
     def update(self, target):
         self.state = self.camera_func(self.state, target.rect, self.WIN_WIDTH,self.WIN_HEIGHT,self.HALF_WIDTH,self.HALF_HEIGHT)
 
