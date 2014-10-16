@@ -11,7 +11,7 @@
   [
     {"type" : "sprites.player",
      "image":"gamedata/images/ball.png", 
-     "position":[117,117]
+     "position":[110,110]
     }
   ],
 "blocks":
