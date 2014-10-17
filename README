@@ -4,6 +4,12 @@ Mix of an rpg and a strategy game where you do the typical rpg things but you bu
 
 On my honor I have neither given nor recieved help on this project.
 
+Controls
+WASD or ARROWS - movement
+1 - go to level 1
+2 - go to level 2
+mouse click - attack in direction of mouse
+
 1st week - 
 	features-
 		implemented collisions
