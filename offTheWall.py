@@ -1,8 +1,11 @@
 import pygame
 import sprites.player
 import sprites.obstacle
+import sprites.healthsprite
 import utils.gamedata
-import camera
+import utils.camera as camera
+import utils.soundplayer
+
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
@@ -16,54 +19,73 @@ class OffTheWall(object):
 
         self.screen = None 
 
+    def generatemap(self, filename):
+        self.sprite_group = pygame.sprite.Group()
+        self.game_data = utils.gamedata.GameData(filename, self.sprite_group)
+        self.game_data_obj = self.game_data.dictToObjects()
+        self.player = self.game_data.player
+        self.generatescreen()
+    def generatescreen(self):
+        self.screen = pygame.display.set_mode(self.game_data.getGameGlobals()['resolution'])
+        FULL_MAP_WIDTH = self.game_data.getGameGlobals()['maprect'][0]
+        FULL_MAP_HEIGHT = self.game_data.getGameGlobals()['maprect'][1]
+        WIN_WIDTH = self.game_data.getGameGlobals()['resolution'][0]
+        WIN_HEIGHT = self.game_data.getGameGlobals()['resolution'][1]
+        self.screen_camera = camera.Camera(camera.complex_camera,FULL_MAP_WIDTH,FULL_MAP_HEIGHT,WIN_WIDTH,WIN_HEIGHT)
+        self.background = pygame.transform.scale(pygame.image.load(self.game_data.getGameGlobals()['backgroundimage']), self.game_data.getGameGlobals()['maprect'])
+        self.player.createcamera(WIN_WIDTH,WIN_HEIGHT)
+    def checkdeath(self):
+        for cell in self.sprite_group:
+            if isinstance(cell,sprites.healthsprite.HealthSprite):
+                if cell.dead:
+                    self.sprite_group.remove(cell)
+                    self.soundplayer.playsound("death")
+    def drawhealth(self,cell):
+        if isinstance(cell,sprites.healthsprite.HealthSprite):
+            temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)
+            temprect2 = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width*cell.health/cell.maxhealth,10)
+            colorvalue = cell.health*255/cell.maxhealth
+            
+            pygame.draw.rect(self.screen,(255-colorvalue,colorvalue,0),self.screen_camera.apply(temprect2))
+            pygame.draw.rect(self.screen,(0,0,0),self.screen_camera.apply(temprect),2)
+    def setupsounds(self):
+        self.soundplayer = utils.soundplayer.SoundPlayer()
+        self.soundplayer.addsound("utils/Sounds/hit.wav","hit")
+        self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
+        self.soundplayer.playmusic("utils/Sounds/testsound.wav")
     def main(self, screen):
 
         ''' Main function for the game '''
 
-        sprite_group = pygame.sprite.Group()
-        game_data = utils.gamedata.GameData('gamedata/level1.json', sprite_group)
-        game_data_obj = game_data.dictToObjects()
-        self.player = game_data.player
+        self.generatemap('gamedata/level1.json')
         
-
-        
-        
-        self.screen = pygame.display.set_mode(game_data.getGameGlobals()['resolution'])
-        FULL_MAP_WIDTH = game_data.getGameGlobals()['maprect'][0]
-        FULL_MAP_HEIGHT = game_data.getGameGlobals()['maprect'][1]
-        WIN_WIDTH = game_data.getGameGlobals()['resolution'][0]
-        WIN_HEIGHT = game_data.getGameGlobals()['resolution'][1]
-        screen_camera = camera.Camera(camera.complex_camera,FULL_MAP_WIDTH,FULL_MAP_HEIGHT,WIN_WIDTH,WIN_HEIGHT)
+        self.setupsounds()
         clock = pygame.time.Clock()
-        self.background = pygame.transform.scale(pygame.image.load(game_data.getGameGlobals()['backgroundimage']), game_data.getGameGlobals()['maprect'])
         basicfont = pygame.font.SysFont(None, 48)
-        text = basicfont.render('Off The Wall!', True, (255,0,0))
-        textrect = text.get_rect()
-        textrect.centerx = self.screen.get_rect().centerx
-        textrect.centery = 50
-        fpsText = basicfont.render('FPS: ' + str(game_data.getGameGlobals()['fps']), True, (255,0,0))
-        fpsTextRect = fpsText.get_rect()
-        fpsTextRect.centerx = 60
-        fpsTextRect.centery = 30
+
+
 
         while 1:
-            clock.tick(game_data.getGameGlobals()['fps'])
+            clock.tick(self.game_data.getGameGlobals()['fps'])
             for event in pygame.event.get():
                 if event.type is pygame.QUIT:
                     return
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_ESCAPE:
                     return
+                if event.type is pygame.KEYDOWN:
+                    if event.key is pygame.K_1:
+                        self.generatemap('gamedata/level1.json')
+                    if event.key is pygame.K_2:
+                        self.generatemap('gamedata/level2.json')
 
-            timeText = basicfont.render('Time: ' + str(pygame.time.get_ticks()/1000), True, (255,0,0))
-            timeTextRect = timeText.get_rect()
-            timeTextRect.centerx = 60
-            timeTextRect.centery = 80
-
-            sprite_group.update(sprite_group)
-            screen_camera.update(self.player)
-            self.screen.blit(self.background,screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
-            for e in sprite_group.sprites():
-                self.screen.blit(e.image,screen_camera.apply(e.rect))
+            self.sprite_group.update(self.sprite_group,self.soundplayer)
+            self.checkdeath()
+            self.screen_camera.update(self.player)
+            self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
+            for e in self.sprite_group.sprites():
+                self.screen.blit(e.image,self.screen_camera.apply(e.rect))
+            for e in self.sprite_group.sprites():
+                self.drawhealth(e)
             pygame.display.flip()
 
 if __name__ == '__main__':

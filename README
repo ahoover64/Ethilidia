@@ -1,7 +1,8 @@
-Michael Ott + Jeffrey Chen
+Michael Ott & Jeffrey Chen
 
-Mix of an rpg and a strategy game where you do the typical rpg things but you build up a force
-of mercenaries to conquer new territories and eventually win the game
+Mix of an rpg and a strategy game where you do the typical rpg things but you build up a force of mercenaries to conquer new territories and eventually win the game
+
+On my honor I have neither given nor recieved help on this project.
 
 1st week - 
 	features-
@@ -10,7 +11,32 @@ of mercenaries to conquer new territories and eventually win the game
 		changed sprites to be resized in json
         not implemented-
 		trouble uploading new sprites to github
+	features for next week (hopefully)-
+		combat + health
+		sounds
+		new areas
+		enemy NPCs
 
-on my honor I have neither given nor recieved help on this project
-
-
+2nd week -
+        features-
+		implemented sound
+                implemented enemies
+                implemented switching areas (using number keys)
+                implemented health + combat
+                added house images and enemy images and background image
+                camera size set in json
+        not implemented-
+                new top-down player sprite
+		in game menu
+	features for next week (hopefully) -
+		in-game menu
+		animated sprites
+		change player sprite to top-down
+		add ability to change which direction sprites are facing
+		change background music
+		
+                
+Bibliography - 
+        enemy sprite image: http://millionthvector.blogspot.com/2014_06_01_archive.html
+	player sprite image: http://answers.unity3d.com/questions/356170/flip-spritesheet.html	
+	house sprite image: created by ourselves
