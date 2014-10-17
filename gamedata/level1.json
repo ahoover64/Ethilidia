@@ -10,8 +10,9 @@
 "player":
   [
     {"type" : "sprites.player",
-     "image":"gamedata/images/ball.png", 
-     "position":[110,110]
+     "image":"gamedata/pictures/topDownSpriteSheet.png", 
+     "position":[110,110],
+     "ssinfo":[43,125,1,7,53,105,97,0]
     }
   ],
 "blocks":

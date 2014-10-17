@@ -80,6 +80,8 @@ class GameData():
                                 p = sprites.player.Player(self.json_scene[entry][i]['image'],
                                                         self.json_scene[entry][i]['position'],
                                                         self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['ssinfo'],
+                                                        self.game_globals['fps'],
                                                         self.sprite_group)
                                 self.player = p
                                 new_obj = {entry:p}

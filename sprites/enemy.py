@@ -41,12 +41,17 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
         if self.distance(self.centerx,self.playercenterx,self.centery,self.playercentery) <= 500:
             if self.centerx < self.playercenterx:
                 self.rect.x += 5
-            else:
+            elif self.centerx > self.playercenterx:
                 self.rect.x -= 5
+            else:
+                pass
             if self.centery < self.playercentery:
                 self.rect.y += 5
-            else:
+            elif self.centery > self.playercentery:
                 self.rect.y -= 5
+            else:
+                pass
+            self.rotateForDirection(self.previous,self.rect,90)
             self.checkEdgeCollisions()
             self.checkCollisions(game_sprites,[obstacle.Obstacle,Enemy])
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
