@@ -83,7 +83,7 @@ class OffTheWall(object):
             self.screen_camera.update(self.player)
             self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
             for e in self.sprite_group.sprites():
-                self.screen.blit(e.image,self.screen_camera.apply(e.rect))
+                self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
             for e in self.sprite_group.sprites():
                 self.drawhealth(e)
             pygame.display.flip()

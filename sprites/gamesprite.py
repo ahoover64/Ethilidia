@@ -15,11 +15,13 @@ class GameSprite(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, rectangle)
         self.originalimage = self.image
         self.rect = pygame.rect.Rect(position, self.image.get_size())
+        self.imagerect = self.rect
     def rotateImageTo(self,degrees):
-        
         self.image = pygame.transform.scale(self.originalimage, (self.rect.width,self.rect.height))
         self.image = pygame.transform.rotate(self.image,degrees)
-        '''self.image.scroll((int)(-(self.image.get_width()-self.rect.width)/2),(int)(-(self.image.get_height()-self.rect.height)/2))'''
+    def fixImage(self):
+        self.imagerect = self.image.get_rect()
+        self.imagerect.center = self.rect.center
     def rotateForDirection(self,previous,current,offset):
         if (previous.x == current.x and previous.y == current.y):
             pass
