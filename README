@@ -41,6 +41,22 @@ mouse click - attack in direction of mouse
 		add ability to change which direction sprites are facing
 		change background music
 		
+3rd week -
+	features - 
+		added and fixed rotation so it doesn't shift image or hitbox
+                created new player and enemy sprites
+                player sprite changed to top-down
+                sprites animated
+        not implemented -
+		in game menu
+                new sprites not in sprite sheet form yet so not in game
+                background music not changed
+        features for next week (hopefully) -
+		in game menu
+                sprites in sheet form
+                background music
+                attack animation
+                work on inventory
                 
 Bibliography - 
         enemy sprite image: http://millionthvector.blogspot.com/2014_06_01_archive.html
