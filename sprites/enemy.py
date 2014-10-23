@@ -54,5 +54,6 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
             self.rotateForDirection(self.previous,self.rect,90)
             self.checkEdgeCollisions()
             self.checkCollisions(game_sprites,[obstacle.Obstacle,Enemy])
+            self.fixImage()
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
 

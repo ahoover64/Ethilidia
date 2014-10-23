@@ -75,6 +75,5 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
             pass
         self.checkEdgeCollisions()
         self.checkCollisions(game_sprites)
-        
-            
+        self.fixImage()
 
