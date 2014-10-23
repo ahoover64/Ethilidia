@@ -10,7 +10,7 @@
 "player":
   [
     {"type" : "sprites.player",
-     "image":"gamedata/pictures/topDownSpriteSheet.png", 
+     "image":"gamedata/pictures/Knight Basic.png", 
      "position":[110,110],
      "ssinfo":[43,125,1,7,53,105,97,0]
     }
