@@ -4,7 +4,8 @@
     {"fps" : 60,
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
-     "backgroundimage":"gamedata/pictures/map.png"
+     "backgroundimage":"gamedata/pictures/map.png",
+     "gamemusic":"utils/Sounds/testsound.wav"
     }
   ],
 "player":

@@ -1,5 +1,4 @@
 import pygame 
-import gamesprite
 class HealthSprite(object):
 
     ''' Simple object that moves left and right across the screen '''

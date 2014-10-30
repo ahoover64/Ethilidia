@@ -52,7 +52,7 @@ class OffTheWall(object):
         self.soundplayer = utils.soundplayer.SoundPlayer()
         self.soundplayer.addsound("utils/Sounds/hit.wav","hit")
         self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
-        self.soundplayer.playmusic("utils/Sounds/testsound.wav")
+        self.soundplayer.playmusic(self.game_data.getGameGlobals()['gamemusic'])
     def main(self, screen):
 
         ''' Main function for the game '''
