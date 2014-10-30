@@ -86,6 +86,7 @@ class OffTheWall(object):
                 self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
             for e in self.sprite_group.sprites():
                 self.drawhealth(e)
+            self.player.inventory.displayInventory(self.screen)
             pygame.display.flip()
 
 if __name__ == '__main__':
