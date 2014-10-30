@@ -52,7 +52,8 @@ class OffTheWall(object):
         self.soundplayer = utils.soundplayer.SoundPlayer()
         self.soundplayer.addsound("utils/Sounds/hit.wav","hit")
         self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
-        self.soundplayer.playmusic("utils/Sounds/testsound.wav")
+        self.soundplayer.stopmusic()
+        self.soundplayer.playmusic(self.game_data.getGameGlobals()['gamemusic'])
     def main(self, screen):
 
         ''' Main function for the game '''
@@ -86,6 +87,7 @@ class OffTheWall(object):
                 self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
             for e in self.sprite_group.sprites():
                 self.drawhealth(e)
+            self.player.inventory.displayInventory(self.screen)
             pygame.display.flip()
 
 if __name__ == '__main__':

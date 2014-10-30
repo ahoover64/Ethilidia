@@ -9,7 +9,7 @@ WASD or ARROWS - movement
 1 - go to level 1
 2 - go to level 2
 mouse click - attack in direction of mouse
-
+I - brings up inventory
 1st week - 
 	features-
 		implemented collisions
@@ -58,6 +58,24 @@ mouse click - attack in direction of mouse
                 attack animation
                 work on inventory
                 
+4th week -
+	features -
+		pressing i brings up inventory grid(placeholder for image)
+		structure for inventory and items created (currently only type of item is a weapon)
+		created new spritesheet
+                created new background music
+		music changed from json
+        not implemented - 
+		new sprite not ingame
+                new music not ingame
+                no game menu
+                no attack animation (idea changed, will work on attack animations once weapons are implemented)
+        features for next week (hopefully) -
+        	in game menu
+		implemented new sprites
+		implemented new music
+                inventory and items(items will be started but probably not finished)
+		
 Bibliography - 
         enemy sprite image: http://millionthvector.blogspot.com/2014_06_01_archive.html
 	player sprite image: http://answers.unity3d.com/questions/356170/flip-spritesheet.html	

@@ -7,20 +7,22 @@ import math
 import utils.camera
 import utils.soundplayer
 import animationsprite
+import inventory
 class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, healthsprite.HealthSprite):
 
     ''' Simple player class which allows you to move
         a sprite across the screen with the arrow keys
     '''
 
-    def __init__(self, filename, position, world_dim, ssinfo, fps, *groups):
+    def __init__(self, filename, position, world_dim, ssinfo, fps, screensize, *groups):
 
         ''' Initializes the player sprite '''
         super(Player, self).__init__(filename, position, world_dim,(50,50), *groups)
         animationsprite.AnimationSprite.__init__(self,filename,position,world_dim,(50,50),ssinfo,fps,*groups)
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
-
+        self.inventory = inventory.Inventory(screensize)
+        self.ipressed = False
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
         self.screen_camera = utils.camera.Camera(utils.camera.complex_camera,self.world_dim[0],self.world_dim[1],WIN_WIDTH,WIN_HEIGHT)
     def swingatmouse(self,mx,my,game_sprites):
@@ -47,9 +49,16 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         ''' Moves the player sprite across the screen
             with arrow keys
         '''
+        
         self.previous = self.rect.copy()
         self.animationTick()
         key = pygame.key.get_pressed()
+        if key[pygame.K_i]:
+            if self.ipressed == False:
+                self.inventory.open = not self.inventory.open
+            self.ipressed = True
+        else:
+            self.ipressed = False
         if key[pygame.K_LEFT] or key[pygame.K_a]:
             self.rect.x -= 10
         if key[pygame.K_RIGHT] or key[pygame.K_d]:
