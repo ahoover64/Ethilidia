@@ -16,7 +16,7 @@ class AnimationSprite(object):
         ss = spritesheet.spritesheet(filename)
         startx,starty,rows,cols,width,height,bufferwidth,bufferheight = ssinfo
         self.images = []
-	self.images = self.spritesheetToImages(ss,startx, starty, rows,cols,width,height,bufferwidth,bufferheight)
+	self.images = self.spritesheetToImages(ss,startx, starty, rows, cols,width,height,bufferwidth,bufferheight)
         self.image = self.images[0]
         self.originalimage = self.image
         self.image = pygame.transform.scale(self.image, size)
