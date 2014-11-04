@@ -8,6 +8,7 @@ import utils.camera
 import utils.soundplayer
 import animationsprite
 import inventory
+import sword
 class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, healthsprite.HealthSprite):
 
     ''' Simple player class which allows you to move
@@ -22,10 +23,21 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
         self.inventory = inventory.Inventory(screensize)
+        startweapon = sword.Sword("Simple Sword", "image name", "description", 10, 50)
+        self.inventory.equippedweapon = startweapon
+        self.inventory.addItem(startweapon)
+        otherweapon = sword.Sword("Other Sword", "image name", "description", 50, 50)
+        self.inventory.addItem(otherweapon)
         self.ipressed = False
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
         self.screen_camera = utils.camera.Camera(utils.camera.complex_camera,self.world_dim[0],self.world_dim[1],WIN_WIDTH,WIN_HEIGHT)
     def swingatmouse(self,mx,my,game_sprites):
+        if self.inventory.equippedweapon == None:
+            damage = 0
+            wrange = 0
+        else:
+            damage = self.inventory.equippedweapon.damage
+            wrange = self.inventory.equippedweapon.wrange
         self.screen_camera.update(self)
         shiftrect = pygame.Rect(mx,my,0,0)
         shiftrect = self.screen_camera.backapply(shiftrect)
@@ -34,14 +46,14 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         norm = math.sqrt(tempx*tempx+tempy*tempy)
         normx = tempx/norm
         normy = tempy/norm
-        rect = pygame.Rect(normx*50-25,normy*50-25,50,50)
+        rect = pygame.Rect(normx*wrange/2-wrange/2,normy*wrange/2-wrange/2,wrange,wrange)
         rect.x += self.rect.x+self.rect.width/2
         rect.y += self.rect.y+self.rect.height/2
         hit = False
         for cell in game_sprites:
             if isinstance(cell,healthsprite.HealthSprite) and not cell == self:
                 if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
-                    cell.damage(20)
+                    cell.damage(damage)
                     hit = True
         return hit
     def update(self, game_sprites,soundplayer):
@@ -59,6 +71,8 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
             self.ipressed = True
         else:
             self.ipressed = False
+        if self.inventory.open:
+            self.inventory.inventoryInteractions()
         if key[pygame.K_LEFT] or key[pygame.K_a]:
             self.rect.x -= 10
         if key[pygame.K_RIGHT] or key[pygame.K_d]:
