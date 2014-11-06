@@ -11,7 +11,7 @@
 "player":
   [
     {"type" : "sprites.player",
-     "image":"gamedata/pictures/Knight Sprite Sheet.png", 
+     "image":"gamedata/pictures/KnightSpriteSheet.png", 
      "position":[110,110],
      "ssinfo":[43,125,1,7,53,105,97,0]
     }
