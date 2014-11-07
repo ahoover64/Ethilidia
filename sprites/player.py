@@ -82,7 +82,7 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         if key[pygame.K_DOWN] or key[pygame.K_s]:
             self.rect.y += 10
 
-        self.rotateForDirection(self.previous,self.rect,0)
+        self.rotateForDirection(self.previous,self.rect,180)
         m1,_,_ = pygame.mouse.get_pressed()
         mx,my = pygame.mouse.get_pos()
         hit = False
