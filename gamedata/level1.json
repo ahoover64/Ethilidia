@@ -5,13 +5,13 @@
      "resolution" : [1280,720],
      "maprect" : [2000,1500],
      "backgroundimage":"gamedata/pictures/map.png",
-     "gamemusic":"utils/Sounds/testsound.wav"
+     "gamemusic":"utils/Sounds/Ending Credits.wav"
     }
   ],
 "player":
   [
     {"type" : "sprites.player",
-     "image":"gamedata/pictures/topDownSpriteSheet.png", 
+     "image":"gamedata/pictures/KnightSpriteSheet.png", 
      "position":[110,110],
      "ssinfo":[43,125,1,7,53,105,97,0]
     }
