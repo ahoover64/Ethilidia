@@ -21,7 +21,7 @@ class OffTheWall(object):
 
     def generatemap(self, filename):
         self.sprite_group = pygame.sprite.Group()
-        self.game_data = utils.gamedata.GameData(filename, self.sprite_group)
+        self.game_data = utils.gamedata.GameData(filename, self.sprite_group, self.level)
         self.game_data_obj = self.game_data.dictToObjects()
         self.player = self.game_data.player
         self.generatescreen()
@@ -54,17 +54,35 @@ class OffTheWall(object):
         self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
         self.soundplayer.stopmusic()
         self.soundplayer.playmusic(self.game_data.getGameGlobals()['gamemusic'])
+    def nextLevel(self):
+        self.level += 1
+        if self.level > self.maxLevel:
+            self.level = 10
+        else:
+            self.generatemap('gamedata/level2.json')
+            self.player.rect.x = 0
+    def previousLevel(self):
+        self.level -= 1
+        if self.level < 1:
+            self.level = 1
+        elif self.level == 1:
+            self.generatemap('gamedata/level1.json')
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width
+        else:
+            self.generatemap('gamedata/level2.json')
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width
     def main(self, screen):
 
         ''' Main function for the game '''
-
+        self.level = 1
+        self.maxLevel = 10
         self.generatemap('gamedata/level1.json')
         
         self.setupsounds()
         clock = pygame.time.Clock()
         basicfont = pygame.font.SysFont(None, 48)
-
-
+        
+        
 
         while 1:
             clock.tick(self.game_data.getGameGlobals()['fps'])
@@ -74,10 +92,10 @@ class OffTheWall(object):
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_ESCAPE:
                     return
                 if event.type is pygame.KEYDOWN:
-                    if event.key is pygame.K_1:
-                        self.generatemap('gamedata/level1.json')
-                    if event.key is pygame.K_2:
-                        self.generatemap('gamedata/level2.json')
+                    if event.key is pygame.K_EQUALS:
+                        self.nextLevel()
+                    if event.key is pygame.K_MINUS:
+                        self.previousLevel()
 
             self.sprite_group.update(self.sprite_group,self.soundplayer)
             self.checkdeath()

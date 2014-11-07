@@ -13,7 +13,12 @@ class GameData():
 
     class __GameData:
 
-        def __init__(self, scene_file, sprite_group):
+        def __init__(self, scene_file, sprite_group, level):
+            self.loadFromJson(scene_file)
+            self.sprite_group = sprite_group
+            self.playerNotCreated = True
+            self.level = level
+        def loadFromJson(self, scene_file):
             self.game_globals = dict()
             # open the scene file
             try:
@@ -24,8 +29,7 @@ class GameData():
                 sys.exit(0)
 
             self.json_scene = json.load(self.scene_file)
-            self.sprite_group = sprite_group
-
+            
         def __getGameClassNames__(self):
             return self.json_scene.keys()
 
@@ -77,16 +81,20 @@ class GameData():
                     for i in range(0,len(self.json_scene[entry])):
                         try:
                             if self.json_scene[entry][i]['type'] == "sprites.player":
-                                p = sprites.player.Player(self.json_scene[entry][i]['image'],
-                                                        self.json_scene[entry][i]['position'],
-                                                        self.game_globals['maprect'],
-                                                        self.json_scene[entry][i]['ssinfo'],
-                                                        self.game_globals['fps'],
-                                                        self.game_globals['resolution'],
-                                                        self.sprite_group)
-                                self.player = p
-                                new_obj = {entry:p}
-                                objects[entry].append(p)
+                                if self.playerNotCreated:
+                                    p = sprites.player.Player(self.json_scene[entry][i]['image'],
+                                                            self.json_scene[entry][i]['position'],
+                                                            self.game_globals['maprect'],
+                                                            self.json_scene[entry][i]['ssinfo'],
+                                                            self.game_globals['fps'],
+                                                            self.game_globals['resolution'],
+                                                            self.sprite_group)
+                                    self.player = p
+                                    self.playerNotCreated = False
+                                else:
+                                    self.sprite_group.add(self.player)
+                                objects[entry].append(self.player)
+                                
 
                             elif self.json_scene[entry][i]['type'] == "sprites.obstacle":
                                 for j in range(self.json_scene[entry][i]['number']):
@@ -97,7 +105,7 @@ class GameData():
                                                         self.json_scene[entry][i]['size'],
                                                         self.sprite_group)
                                 
-                                    new_obj = {entry:o}
+                                    
                                     objects[entry].append(o)
 
                             elif self.json_scene[entry][i]['type'] == "sprites.enemy":
@@ -107,9 +115,10 @@ class GameData():
                                                         randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['size'],
+                                                        self.level,
                                                         self.sprite_group)
                                 
-                                    new_obj = {entry:e}
+                                    
                                     objects[entry].append(e)
 
                         except ValueError:
@@ -122,11 +131,14 @@ class GameData():
 
     
 
-    def __init__(self, arg, sprite_group):
-        '''if not GameData.instance:'''
-        GameData.instance = GameData.__GameData(arg, sprite_group)
-        '''else:
-            GameData.instance.val = arg'''
+    def __init__(self, arg, sprite_group, level):
+        if not GameData.instance:
+            GameData.instance = GameData.__GameData(arg, sprite_group, level)
+        else:
+            GameData.instance.loadFromJson(arg)
+            GameData.instance.sprite_group = sprite_group
+            GameData.instance.level = level
+        
 
     def __getattr__(self, name):
         return getattr(self.instance, name)

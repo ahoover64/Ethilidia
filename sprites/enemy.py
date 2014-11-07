@@ -10,14 +10,16 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
 
     ''' Simple object that moves left and right across the screen '''
 
-    def __init__(self, filename, position, world_dim, rectangle, *groups):
+    def __init__(self, filename, position, world_dim, rectangle, level, *groups):
 
         ''' Initializes the obstacle sprite '''
 
         super(Enemy, self).__init__(filename, position, world_dim, rectangle, *groups)
-        healthsprite.HealthSprite.__init__(self,100)
+        healthsprite.HealthSprite.__init__(self,50*level)
         self.hasplayer = False
         self.attackdistance = 500
+        self.level = level
+        self.attack = 0.1*level
     def getPlayer(self, game_sprites):
         for cell in game_sprites:
             if isinstance(cell,player.Player):
@@ -55,5 +57,9 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
             self.checkEdgeCollisions()
             self.checkCollisions(game_sprites,[obstacle.Obstacle,Enemy])
             self.fixImage()
+            self.centerx = self.rect.x + self.rect.width/2
+            self.centery = self.rect.y + self.rect.height/2
+            if self.distance(self.centerx,self.playercenterx,self.centery,self.playercentery) <= self.rect.width/2+self.playercharacter.rect.width/2:
+                self.playercharacter.damage(self.attack)
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
 
