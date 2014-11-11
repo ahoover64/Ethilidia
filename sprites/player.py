@@ -26,7 +26,7 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         startweapon = sword.Sword("Simple Sword", "image name", "description", 10, 50)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
-        otherweapon = sword.Sword("Other Sword", "image name", "description", 50, 50)
+        otherweapon = sword.Sword("Other Sword", "image name", "description", 50, 500)
         self.inventory.addItem(otherweapon)
         self.ipressed = False
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):

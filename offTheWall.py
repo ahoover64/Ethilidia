@@ -68,20 +68,25 @@ class OffTheWall(object):
             self.level = self.currentMaxLevel
         elif self.level == self.currentMaxLevel:
             self.generatemap('gamedata/uncompleted.json')
-            self.player.rect.x = 0
+            self.player.rect.x = 10
         else:
             self.generatemap('gamedata/completed.json')
-            self.player.rect.x = 0
+            self.player.rect.x = 10
     def previousLevel(self):
         self.level -= 1
         if self.level < 1:
             self.level = 1
         elif self.level == 1:
             self.generatemap('gamedata/town.json')
-            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
         else:
             self.generatemap('gamedata/completed.json')
-            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
+    def checkPlayerShift(self):
+        if self.player.rect.x <= 0:
+            self.previousLevel()
+        elif self.player.rect.x >= self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width:
+            self.nextLevel()
     def main(self, screen):
 
         ''' Main function for the game '''
@@ -104,17 +109,11 @@ class OffTheWall(object):
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_ESCAPE:
                     return
                 if event.type is pygame.KEYDOWN:
-                    if event.key is pygame.K_EQUALS:
-                        self.nextLevel()
-                    if event.key is pygame.K_MINUS:
-                        self.previousLevel()
+                    pass
 
             self.sprite_group.update(self.sprite_group,self.soundplayer)
             self.checkdeath()
-            enemies = self.enemiesLeft()
-            if enemies == 0 and self.level == self.currentMaxLevel:
-                self.currentMaxLevel += 1
-                '''play sound'''
+            
             self.screen_camera.update(self.player)
             self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
             for e in self.sprite_group.sprites():
@@ -123,7 +122,11 @@ class OffTheWall(object):
                 self.drawhealth(e)
             self.player.inventory.displayInventory(self.screen)
             pygame.display.flip()
-            
+            enemies = self.enemiesLeft()
+            if enemies == 0 and self.level == self.currentMaxLevel:
+                self.currentMaxLevel += 1
+                '''play sound'''
+            self.checkPlayerShift()
             
 
 if __name__ == '__main__':
