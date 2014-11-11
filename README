@@ -75,7 +75,21 @@ I - brings up inventory
 		implemented new sprites
 		implemented new music
                 inventory and items(items will be started but probably not finished)
-		
+
+5th week -
+	features -
+		implemented new spritesheet and is in correct orientation
+		implemented new enemy spritesheet
+		inventory with switchable weapons that are actually different
+		enemies' health and damage increase as level increases
+		new map image
+		can only progress level if all enemies are killed
+		no longer able to transition through levels through buttons (must walk to right side of screen after all enemies are dead)
+	not implemented -
+		start menu
+		no attack animation
+		no item drops
+
 Bibliography - 
         enemy sprite image: http://millionthvector.blogspot.com/2014_06_01_archive.html
 	player sprite image: http://answers.unity3d.com/questions/356170/flip-spritesheet.html	
