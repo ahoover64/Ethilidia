@@ -21,7 +21,7 @@ class OffTheWall(object):
 
     def generatemap(self, filename):
         self.sprite_group = pygame.sprite.Group()
-        self.game_data = utils.gamedata.GameData(filename, self.sprite_group)
+        self.game_data = utils.gamedata.GameData(filename, self.sprite_group, self.level)
         self.game_data_obj = self.game_data.dictToObjects()
         self.player = self.game_data.player
         self.generatescreen()
@@ -54,17 +54,52 @@ class OffTheWall(object):
         self.soundplayer.addsound("utils/Sounds/deathsound.wav","death")
         self.soundplayer.stopmusic()
         self.soundplayer.playmusic(self.game_data.getGameGlobals()['gamemusic'])
+    def enemiesLeft(self):
+        enemyNum = 0
+        for cell in self.sprite_group:
+            if isinstance(cell,sprites.enemy.Enemy):
+                enemyNum += 1
+        return enemyNum
+    def nextLevel(self):
+        self.level += 1
+        if self.level > self.maxLevel:
+            self.level = self.maxLevel
+        elif self.level > self.currentMaxLevel:
+            self.level = self.currentMaxLevel
+        elif self.level == self.currentMaxLevel:
+            self.generatemap('gamedata/uncompleted.json')
+            self.player.rect.x = 10
+        else:
+            self.generatemap('gamedata/completed.json')
+            self.player.rect.x = 10
+    def previousLevel(self):
+        self.level -= 1
+        if self.level < 1:
+            self.level = 1
+        elif self.level == 1:
+            self.generatemap('gamedata/town.json')
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
+        else:
+            self.generatemap('gamedata/completed.json')
+            self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
+    def checkPlayerShift(self):
+        if self.player.rect.x <= 0:
+            self.previousLevel()
+        elif self.player.rect.x >= self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width:
+            self.nextLevel()
     def main(self, screen):
 
         ''' Main function for the game '''
-
-        self.generatemap('gamedata/level1.json')
+        self.level = 1
+        self.currentMaxLevel = 1
+        self.maxLevel = 10
+        self.generatemap('gamedata/town.json')
         
         self.setupsounds()
         clock = pygame.time.Clock()
         basicfont = pygame.font.SysFont(None, 48)
-
-
+        
+        
 
         while 1:
             clock.tick(self.game_data.getGameGlobals()['fps'])
@@ -74,13 +109,11 @@ class OffTheWall(object):
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_ESCAPE:
                     return
                 if event.type is pygame.KEYDOWN:
-                    if event.key is pygame.K_1:
-                        self.generatemap('gamedata/level1.json')
-                    if event.key is pygame.K_2:
-                        self.generatemap('gamedata/level2.json')
+                    pass
 
             self.sprite_group.update(self.sprite_group,self.soundplayer)
             self.checkdeath()
+            
             self.screen_camera.update(self.player)
             self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
             for e in self.sprite_group.sprites():
@@ -89,6 +122,12 @@ class OffTheWall(object):
                 self.drawhealth(e)
             self.player.inventory.displayInventory(self.screen)
             pygame.display.flip()
+            enemies = self.enemiesLeft()
+            if enemies == 0 and self.level == self.currentMaxLevel:
+                self.currentMaxLevel += 1
+                '''play sound'''
+            self.checkPlayerShift()
+            
 
 if __name__ == '__main__':
 
