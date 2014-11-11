@@ -29,7 +29,8 @@
   [
     {"type" : "sprites.enemy",
      "number" : 50,
-     "image":"gamedata/pictures/fighter.png", 
+     "image":"gamedata/pictures/Enemy Sprite Sheet.png", 
+     "ssinfo":[0,0,4,1,200,200,0,0],
      "randomrect" : [500,500,2000,1500],
      "size":[50,50]
     }

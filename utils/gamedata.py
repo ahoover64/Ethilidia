@@ -114,6 +114,8 @@ class GameData():
                                     e = sprites.enemy.Enemy(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['ssinfo'],
+                                                        self.game_globals['fps'],
                                                         self.json_scene[entry][i]['size'],
                                                         self.level,
                                                         self.sprite_group)

@@ -6,15 +6,17 @@ import player
 import math
 import healthsprite
 import utils.soundplayer
-class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
+import animationsprite
+class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, healthsprite.HealthSprite):
 
     ''' Simple object that moves left and right across the screen '''
 
-    def __init__(self, filename, position, world_dim, rectangle, level, *groups):
+    def __init__(self, filename, position, world_dim, ssinfo, fps, rectangle, level, *groups):
 
         ''' Initializes the obstacle sprite '''
 
         super(Enemy, self).__init__(filename, position, world_dim, rectangle, *groups)
+        animationsprite.AnimationSprite.__init__(self,filename,position,world_dim,rectangle,ssinfo,fps,*groups)
         healthsprite.HealthSprite.__init__(self,50*level)
         self.hasplayer = False
         self.attackdistance = 500
@@ -32,7 +34,7 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
         return d
     def update(self,game_sprites,soundplayer):
         
-        
+        self.animationTick()
         self.previous = self.rect.copy()
         if not self.hasplayer:
             self.playercharacter = self.getPlayer(game_sprites)
@@ -53,7 +55,7 @@ class Enemy(collisionsprite.CollisionSprite, healthsprite.HealthSprite):
                 self.rect.y -= 5
             else:
                 pass
-            self.rotateForDirection(self.previous,self.rect,90)
+            self.rotateForDirection(self.previous,self.rect,180)
             self.checkEdgeCollisions()
             self.checkCollisions(game_sprites,[obstacle.Obstacle,Enemy])
             self.fixImage()
