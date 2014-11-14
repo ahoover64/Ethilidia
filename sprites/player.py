@@ -74,13 +74,13 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         if self.inventory.open:
             self.inventory.inventoryInteractions()
         if key[pygame.K_LEFT] or key[pygame.K_a]:
-            self.rect.x -= 10
+            self.rect.x -= 5
         if key[pygame.K_RIGHT] or key[pygame.K_d]:
-            self.rect.x += 10
+            self.rect.x += 5
         if key[pygame.K_UP] or key[pygame.K_w]:
-            self.rect.y -= 10
+            self.rect.y -= 5
         if key[pygame.K_DOWN] or key[pygame.K_s]:
-            self.rect.y += 10
+            self.rect.y += 5
 
         self.rotateForDirection(self.previous,self.rect,180)
         m1,_,_ = pygame.mouse.get_pressed()
