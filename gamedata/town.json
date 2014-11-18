@@ -39,7 +39,7 @@
     {"type" : "sprites.questNPC",
      "number" : 1,
      "image" : "gamedata/pictures/questNPC.png",
-     "randomrect" : [200,200,2000,1500],
+     "randomrect" : [200,200,1800,1300],
      "size" : [50,50]
     }
   ]
