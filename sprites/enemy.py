@@ -44,15 +44,15 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
         self.playercentery = self.playercharacter.rect.y + self.playercharacter.rect.height/2
         if self.distance(self.centerx,self.playercenterx,self.centery,self.playercentery) <= 500:
             if self.centerx < self.playercenterx:
-                self.rect.x += 5
+                self.rect.x += 2.5
             elif self.centerx > self.playercenterx:
-                self.rect.x -= 5
+                self.rect.x -= 2.5
             else:
                 pass
             if self.centery < self.playercentery:
-                self.rect.y += 5
+                self.rect.y += 2.5
             elif self.centery > self.playercentery:
-                self.rect.y -= 5
+                self.rect.y -= 2.5
             else:
                 pass
             self.rotateForDirection(self.previous,self.rect,180)
