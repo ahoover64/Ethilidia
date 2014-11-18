@@ -28,6 +28,7 @@ class OffTheWall(object):
         self.game_data_obj = self.game_data.dictToObjects()
         self.player = self.game_data.player
         self.generatescreen()
+        self.player.world_dim = self.game_data.getGameGlobals()['maprect']
     def generatescreen(self):
         self.screen = pygame.display.set_mode(self.game_data.getGameGlobals()['resolution'])
         FULL_MAP_WIDTH = self.game_data.getGameGlobals()['maprect'][0]

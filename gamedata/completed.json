@@ -21,7 +21,7 @@
     {"type" : "sprites.obstacle",
      "number" : 30,
      "image":"gamedata/pictures/house.png", 
-     "randomrect" : [150,0,1850,1500],
+     "randomrect" : [500,500,5500,4000],
      "size":[80,60]
     }
   ]

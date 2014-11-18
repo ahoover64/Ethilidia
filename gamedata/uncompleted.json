@@ -3,7 +3,7 @@
   [
     {"fps" : 60,
      "resolution" : [1280,720],
-     "maprect" : [2000,1500],
+     "maprect" : [6000,4500],
      "backgroundimage":"gamedata/pictures/map.png",
      "gamemusic":"utils/Sounds/Ending Credits.wav"
     }
@@ -21,7 +21,7 @@
     {"type" : "sprites.obstacle",
      "number" : 30,
      "image":"gamedata/pictures/house.png", 
-     "randomrect" : [150,0,1850,1500],
+     "randomrect" : [500,500,5500,4000],
      "size":[80,60]
     }
   ],
@@ -31,7 +31,7 @@
      "number" : 50,
      "image":"gamedata/pictures/Enemy Sprite Sheet.png", 
      "ssinfo":[0,0,4,1,200,200,0,0],
-     "randomrect" : [500,0,1500,1500],
+     "randomrect" : [500,500,5500,4000],
      "size":[50,50]
     }
   ]
