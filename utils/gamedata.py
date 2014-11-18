@@ -108,6 +108,18 @@ class GameData():
                                     
                                     objects[entry].append(o)
 
+                            elif self.json_scene[entry][i]['type'] == "sprites.NPC":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.obstacle.Obstacle(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
                             elif self.json_scene[entry][i]['type'] == "sprites.enemy":
                                 for j in range(self.json_scene[entry][i]['number']):
                                     randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)

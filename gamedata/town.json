@@ -24,6 +24,15 @@
      "randomrect" : [150,0,1850,1500],
      "size":[150,150]
     }
+  ],
+"NPCs":
+  [
+    {"type" : "sprites.NPC",
+     "number" : 5,
+     "image" : "gamedata/pictures/NPC.png",
+     "randomrect" : [200,200,2000,1500],
+     "size" : [50,50]
+    }
   ]
 }
 
