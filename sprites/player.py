@@ -23,10 +23,10 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
         self.inventory = inventory.Inventory(screensize)
-        startweapon = sword.Sword("Simple Sword", "image name", "description", 10, 50)
+        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Really Bad Sword", 10, 50)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
-        otherweapon = sword.Sword("Other Sword", "image name", "description", 50, 500)
+        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Really OP Sword", 50, 500)
         self.inventory.addItem(otherweapon)
         self.ipressed = False
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
