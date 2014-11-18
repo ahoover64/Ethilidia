@@ -1,19 +1,19 @@
 import pygame
 import message
-absolutemessages = {}
-nonabsolutemessages = {}
+absolutemessages = []
+nonabsolutemessages = []
 ROW_HEIGHT = 40
 TOP_BUFFER = 5
 LEFT_BUFFER = 5
 
 
 def addabsolutemessage(messagename,message):
-    absolutemessages[messagename] = message
+    absolutemessages.append(message)
 def addnonabsolutemessage(messagename,message):
-    nonabsolutemessages[messagename] = message
+    nonabsolutemessages.append(message)
 def resetmessages():
-    absolutemessages.clear()
-    nonabsolutemessages.clear()
+    del absolutemessages[:]
+    del nonabsolutemessages[:]
 def createmessage(lines,rect):
     basicfont = pygame.font.SysFont(None, 24)
     messagebox = pygame.Surface((rect.width,rect.height))

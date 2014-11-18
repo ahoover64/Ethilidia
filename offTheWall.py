@@ -7,6 +7,8 @@ import utils.camera as camera
 import utils.soundplayer
 import utils.messagemanager
 import utils.message
+import sprites.NPC
+import sprites.questNPC
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
@@ -68,9 +70,11 @@ class OffTheWall(object):
         elif self.level > self.currentMaxLevel:
             self.level = self.currentMaxLevel
         elif self.level == self.currentMaxLevel:
+            self.loadMessage()
             self.generatemap('gamedata/uncompleted.json')
             self.player.rect.x = 10
         else:
+            self.loadMessage()
             self.generatemap('gamedata/completed.json')
             self.player.rect.x = 10
     def previousLevel(self):
@@ -78,9 +82,18 @@ class OffTheWall(object):
         if self.level < 1:
             self.level = 1
         elif self.level == 1:
+            self.loadMessage()
             self.generatemap('gamedata/town.json')
             self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
+            if self.currentMaxLevel > self.maxLevel:
+                lines = []
+                lines.append("Thank You Traveler")
+                self.changeNPCMsg(lines,sprites.NPC.NPC)
+                lines2 = []
+                lines2.append("You Defeated All of the Enemies")
+                self.changeNPCMsg(lines2,sprites.questNPC.quest_NPC)
         else:
+            self.loadMessage()
             self.generatemap('gamedata/completed.json')
             self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
     def checkPlayerShift(self):
@@ -88,6 +101,18 @@ class OffTheWall(object):
             self.previousLevel()
         elif self.player.rect.x >= self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width:
             self.nextLevel()
+    def loadMessage(self):
+        lines = []
+        lines.append("Loading...")
+        temprect = pygame.Rect(self.game_data.getGameGlobals()['resolution'][0]-100,self.game_data.getGameGlobals()['resolution'][1]-25,100,25)
+        tempmessagebox = utils.messagemanager.createmessage(lines, temprect)
+        tempmessage = utils.message.Message(tempmessagebox,temprect)
+        self.screen.blit(tempmessage.messagebox,tempmessage.rect)
+        pygame.display.flip()
+    def changeNPCMsg(self,lines,NPCType):
+        for cell in self.sprite_group.sprites():
+            if isinstance(cell,NPCType):
+                cell.msgs = lines
     def main(self, screen):
 
         ''' Main function for the game '''
@@ -125,11 +150,9 @@ class OffTheWall(object):
                 self.drawhealth(e)
             self.player.inventory.displayInventory(self.screen)
 
-            for messagekey in utils.messagemanager.absolutemessages:
-                message = utils.messagemanager.absolutemessages[messagekey]
+            for message in utils.messagemanager.absolutemessages:
                 self.screen.blit(message.messagebox,message.rect)
-            for messagekey in utils.messagemanager.nonabsolutemessages:
-                message = utils.messagemanager.nonabsolutemessages[messagekey]
+            for message in utils.messagemanager.nonabsolutemessages:
                 self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
             utils.messagemanager.resetmessages()
             pygame.display.flip()

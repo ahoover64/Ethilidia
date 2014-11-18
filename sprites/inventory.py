@@ -9,8 +9,8 @@ class Inventory(object):
         self.open = False
         self.rows = 6
         self.cols = 10
-        self.squareside = 100
-        self.squareedge = 5
+        self.squareside = 50
+        self.squareedge = 2.5
         self.screensize = screensize
         self.rect = pygame.Rect((screensize[0]-self.cols*self.squareside)/2,(screensize[1]-self.rows*self.squareside)/2,self.cols*self.squareside,self.rows*self.squareside)
         self.items = []

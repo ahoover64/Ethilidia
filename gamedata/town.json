@@ -33,6 +33,15 @@
      "randomrect" : [200,200,2000,1500],
      "size" : [50,50]
     }
+  ],
+"questNPC":
+  [
+    {"type" : "sprites.questNPC",
+     "number" : 1,
+     "image" : "gamedata/pictures/questNPC.png",
+     "randomrect" : [200,200,2000,1500],
+     "size" : [50,50]
+    }
   ]
 }
 
