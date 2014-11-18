@@ -34,8 +34,8 @@
      "randomrect" : [500,500,5500,4000],
      "size":[50,50]
     }
-  ]
-"enemy"
+  ],
+"veteran_enemy":
   [
     {"type" : "sprites.enemy",
      "number" : 5,
