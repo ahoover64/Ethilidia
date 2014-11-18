@@ -22,7 +22,7 @@
      "number" : 30,
      "image":"gamedata/pictures/house.png", 
      "randomrect" : [150,0,1850,1500],
-     "size":[50,50]
+     "size":[80,60]
     }
   ],
 "enemy":
