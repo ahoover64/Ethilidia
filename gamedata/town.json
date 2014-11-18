@@ -22,7 +22,7 @@
      "number" : 10,
      "image":"gamedata/pictures/house.png", 
      "randomrect" : [150,0,1850,1500],
-     "size":[150,150]
+     "size":[200,150]
     }
   ],
 "NPCs":
