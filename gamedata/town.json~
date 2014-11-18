@@ -31,7 +31,7 @@
      "number" : 5,
      "image" : "gamedata/pictures/NPC.png",
      "randomrect" : [200,200,2000,1500],
-     "size" : [50,50]
+     "size" : [100,100]
     }
   ]
 }
