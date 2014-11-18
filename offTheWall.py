@@ -5,7 +5,8 @@ import sprites.healthsprite
 import utils.gamedata
 import utils.camera as camera
 import utils.soundplayer
-
+import utils.messagemanager
+import utils.message
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
@@ -99,8 +100,10 @@ class OffTheWall(object):
         clock = pygame.time.Clock()
         basicfont = pygame.font.SysFont(None, 48)
         
-        
+        '''Testing Stuff(remove when finished)'''
 
+        '''End of Testing Stuff'''
+        
         while 1:
             clock.tick(self.game_data.getGameGlobals()['fps'])
             for event in pygame.event.get():
@@ -110,7 +113,7 @@ class OffTheWall(object):
                     return
                 if event.type is pygame.KEYDOWN:
                     pass
-
+            
             self.sprite_group.update(self.sprite_group,self.soundplayer)
             self.checkdeath()
             
@@ -121,7 +124,17 @@ class OffTheWall(object):
             for e in self.sprite_group.sprites():
                 self.drawhealth(e)
             self.player.inventory.displayInventory(self.screen)
+
+            for messagekey in utils.messagemanager.absolutemessages:
+                message = utils.messagemanager.absolutemessages[messagekey]
+                self.screen.blit(message.messagebox,message.rect)
+            for messagekey in utils.messagemanager.nonabsolutemessages:
+                message = utils.messagemanager.nonabsolutemessages[messagekey]
+                self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
+            utils.messagemanager.resetmessages()
             pygame.display.flip()
+
+
             enemies = self.enemiesLeft()
             if enemies == 0 and self.level == self.currentMaxLevel:
                 self.currentMaxLevel += 1

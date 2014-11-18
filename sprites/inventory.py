@@ -1,5 +1,7 @@
 import pygame 
 import item
+import utils.messagemanager
+import utils.message
 class Inventory(object):
 
 
@@ -29,9 +31,17 @@ class Inventory(object):
         mx,my = pygame.mouse.get_pos()
         index = self.getSlot(mx,my)
         if (index is not None) and (index < len(self.items)):
+            self.displayStats(index,mx,my)
             m1,_,_ = pygame.mouse.get_pressed()
             if m1:
                 self.equipItem(index)
+    def displayStats(self, index, x, y):
+        item = self.items[index]
+        lines = item.stats
+        temprect = pygame.Rect(x,y,300,150)
+        tempmessagebox = utils.messagemanager.createmessage(lines, temprect)
+        tempmessage = utils.message.Message(tempmessagebox,temprect)
+        utils.messagemanager.addabsolutemessage("weaponmessage",tempmessage)
     def displayInventory(self, screen):
         if self.open:
             screen.blit(self.image,self.rect)
