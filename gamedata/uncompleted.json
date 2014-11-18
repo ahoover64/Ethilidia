@@ -35,5 +35,15 @@
      "size":[50,50]
     }
   ]
+"enemy"
+  [
+    {"type" : "sprites.enemy",
+     "number" : 5,
+     "image" : "gamedata/pictures/Veteran Enemy Sprite Sheet.png",
+     "ssinfo" : [0,0,4,1,200,200,0,0],
+     "randomrect" : [500,500,5500,4000],
+     "size" : [75,75]
+    }
+  ]
 }
 
