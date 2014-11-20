@@ -7,6 +7,8 @@ import sprites.obstacle
 import sprites.enemy
 import sprites.NPC
 import sprites.questNPC
+import sprites.veteranenemy
+import sprites.assassinenemy
 from collections import defaultdict
 
 class GameData():
@@ -138,6 +140,36 @@ class GameData():
                                 for j in range(self.json_scene[entry][i]['number']):
                                     randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
                                     e = sprites.enemy.Enemy(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['ssinfo'],
+                                                        self.game_globals['fps'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.level,
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(e)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.veteranenemy":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    e = sprites.veteranenemy.VeteranEnemy(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['ssinfo'],
+                                                        self.game_globals['fps'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.level,
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(e)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.assassinenemy":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    e = sprites.assassinenemy.AssassinEnemy(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['ssinfo'],
