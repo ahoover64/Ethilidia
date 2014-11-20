@@ -11,6 +11,8 @@ class GameSprite(pygame.sprite.Sprite):
         ''' Initializes the player sprite '''
         super(GameSprite, self).__init__(*groups)
         self.world_dim = world_dim
+        self.createImage(position, rectangle, filename)
+    def createImage(self, position, rectangle, filename):
         self.image = pygame.image.load(filename)
         self.image = pygame.transform.scale(self.image, rectangle)
         self.originalimage = self.image

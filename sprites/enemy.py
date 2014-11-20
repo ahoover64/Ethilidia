@@ -22,6 +22,7 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
         self.attackdistance = 500
         self.level = level
         self.attack = 0.1*level
+        self.speed = 2.5
     def getPlayer(self, game_sprites):
         for cell in game_sprites:
             if isinstance(cell,player.Player):
@@ -44,15 +45,15 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
         self.playercentery = self.playercharacter.rect.y + self.playercharacter.rect.height/2
         if self.distance(self.centerx,self.playercenterx,self.centery,self.playercentery) <= 500:
             if self.centerx < self.playercenterx:
-                self.rect.x += 5
+                self.rect.x += self.speed
             elif self.centerx > self.playercenterx:
-                self.rect.x -= 5
+                self.rect.x -= self.speed
             else:
                 pass
             if self.centery < self.playercentery:
-                self.rect.y += 5
+                self.rect.y += self.speed
             elif self.centery > self.playercentery:
-                self.rect.y -= 5
+                self.rect.y -= self.speed
             else:
                 pass
             self.rotateForDirection(self.previous,self.rect,180)

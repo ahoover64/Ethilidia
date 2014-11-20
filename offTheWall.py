@@ -9,6 +9,8 @@ import utils.messagemanager
 import utils.message
 import sprites.NPC
 import sprites.questNPC
+import random
+import sprites.itemdrop
 class OffTheWall(object):
 
     ''' OffTheWall is a simple python game
@@ -29,6 +31,7 @@ class OffTheWall(object):
         self.player = self.game_data.player
         self.generatescreen()
         self.player.world_dim = self.game_data.getGameGlobals()['maprect']
+        self.player.createcamera(self.game_data.getGameGlobals()['resolution'][0],self.game_data.getGameGlobals()['resolution'][1])
     def generatescreen(self):
         self.screen = pygame.display.set_mode(self.game_data.getGameGlobals()['resolution'])
         FULL_MAP_WIDTH = self.game_data.getGameGlobals()['maprect'][0]
@@ -44,6 +47,11 @@ class OffTheWall(object):
                 if cell.dead:
                     self.sprite_group.remove(cell)
                     self.soundplayer.playsound("death")
+                    self.dropitem(cell.rect)
+    def dropitem(self,rect):
+        rnum = random.randrange(100)
+        if rnum < 50:
+            item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)
     def drawhealth(self,cell):
         if isinstance(cell,sprites.healthsprite.HealthSprite):
             temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)

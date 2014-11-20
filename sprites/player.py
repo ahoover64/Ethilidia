@@ -23,12 +23,13 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
         self.inventory = inventory.Inventory(screensize)
-        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Really Bad Sword", 10, 50)
+        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Really Bad Sword", 10, 75)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
         otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Really OP Sword", 50, 500)
         self.inventory.addItem(otherweapon)
         self.ipressed = False
+        self.speed = 5
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
         self.screen_camera = utils.camera.Camera(utils.camera.complex_camera,self.world_dim[0],self.world_dim[1],WIN_WIDTH,WIN_HEIGHT)
     def swingatmouse(self,mx,my,game_sprites):
@@ -71,16 +72,19 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
             self.ipressed = True
         else:
             self.ipressed = False
+        currentSpeed = self.speed
+        if key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]:
+            currentSpeed = self.speed*1.5
         if self.inventory.open:
             self.inventory.inventoryInteractions()
         if key[pygame.K_LEFT] or key[pygame.K_a]:
-            self.rect.x -= 10
+            self.rect.x -= currentSpeed
         if key[pygame.K_RIGHT] or key[pygame.K_d]:
-            self.rect.x += 10
+            self.rect.x += currentSpeed
         if key[pygame.K_UP] or key[pygame.K_w]:
-            self.rect.y -= 10
+            self.rect.y -= currentSpeed
         if key[pygame.K_DOWN] or key[pygame.K_s]:
-            self.rect.y += 10
+            self.rect.y += currentSpeed
 
         self.rotateForDirection(self.previous,self.rect,180)
         m1,_,_ = pygame.mouse.get_pressed()
