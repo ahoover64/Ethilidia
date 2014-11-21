@@ -17,4 +17,4 @@ class AssassinEnemy(enemy.Enemy):
 
 		healthsprite.HealthSprite.__init__(self,25*level)
 		self.attack = 0.15*level
-		self.speed = 7.5
+		self.speed = 5

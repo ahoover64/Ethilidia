@@ -23,10 +23,10 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
         self.inventory = inventory.Inventory(screensize)
-        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Really Bad Sword", 10, 75)
+        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Standard Sword", 10, 75)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
-        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Really OP Sword", 50, 500)
+        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Admin Weapon", 100, 500)
         self.inventory.addItem(otherweapon)
         self.ipressed = False
         self.speed = 5
