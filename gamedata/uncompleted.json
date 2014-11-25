@@ -51,7 +51,7 @@
      "number" : 10,
      "image" : "gamedata/pictures/Assassin Sprite Sheet.png",
      "ssinfo" : [0,0,4,1,200,200,0,0],
-     "randomrect" : [500,500,5500,4000],
+     "randomrect" : [500,500,5500,2500],
      "size" : [50,50]
     }
   ]
