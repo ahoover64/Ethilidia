@@ -38,7 +38,7 @@ class Inventory(object):
     def displayStats(self, index, x, y):
         item = self.items[index]
         lines = item.stats
-        temprect = pygame.Rect(x,y,300,150)
+        temprect = pygame.Rect(x,y,300,200)
         tempmessagebox = utils.messagemanager.createmessage(lines, temprect)
         tempmessage = utils.message.Message(tempmessagebox,temprect)
         utils.messagemanager.addabsolutemessage("weaponmessage",tempmessage)

@@ -2,11 +2,11 @@ import pygame
 class Item(object):
 
 
-    def __init__(self, name, imagename, description):
+    def __init__(self, name, imagename, description, rarity):
         self.name = name
         self.imagename = imagename
         self.description = description
-        
+        self.rarity = rarity
         if (imagename == None):
             self.image = pygame.Surface((100,100))
             pygame.draw.rect(self.image,(255,255,255),(0,0,100,100))
@@ -24,5 +24,14 @@ class Item(object):
         lines.append(self.name)
         lines.append(self.description)
         return lines
-
+    def giveRarity(self):
+        if self.rarity == 0:
+            rarityName = "Common"
+        elif self.rarity == 1:
+            rarityName = "Uncommon"
+        elif self.rarity == 2:
+            rarityName = "Rare"
+        elif self.rarity == 3:
+            rarityName = "Legendary"
+        return rarityName
 

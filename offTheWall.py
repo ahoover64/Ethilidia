@@ -47,11 +47,13 @@ class OffTheWall(object):
                 if cell.dead:
                     self.sprite_group.remove(cell)
                     self.soundplayer.playsound("death")
-                    self.dropitem(cell.rect)
+                    if isinstance(cell,sprites.enemy.Enemy):
+                        self.dropitem(cell.rect)
     def dropitem(self,rect):
         rnum = random.randrange(100)
         if rnum < 50:
-            item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)
+            utils.itemdropmanager.dropitem(rect,self.game_data.getGameGlobals()['maprect'],self.sprite_group,self.level)
+            '''item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)'''
     def drawhealth(self,cell):
         if isinstance(cell,sprites.healthsprite.HealthSprite):
             temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)

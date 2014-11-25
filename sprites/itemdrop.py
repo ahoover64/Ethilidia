@@ -1,5 +1,7 @@
 import pygame 
 import gamesprite
+import player
+import utils.itemdropmanager
 class ItemDrop(gamesprite.GameSprite):
 
     def __init__(self, level, itemtype, imagename, position, world_dim, rectangle, *groups):
@@ -24,4 +26,15 @@ class ItemDrop(gamesprite.GameSprite):
         self.originalimage = self.image
         self.rect = pygame.rect.Rect(position, self.image.get_size())
         self.imagerect = self.rect 
-
+    def update(self, game_sprites,soundplayer):
+        if self.checkPlayer(game_sprites):
+            game_sprites.remove(self)
+    def checkPlayer(self, game_sprites):
+        other_sprites = game_sprites.copy()
+        if other_sprites.has(self):
+            other_sprites.remove(self)
+        for cell in pygame.sprite.spritecollide(self,other_sprites,False):
+            if isinstance(cell,player.Player):
+                utils.itemdropmanager.pickupitem(self, cell)
+                return True
+        return False
