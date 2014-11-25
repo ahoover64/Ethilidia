@@ -2,11 +2,12 @@ import pygame
 class Item(object):
 
 
-    def __init__(self, name, imagename, description, rarity):
+    def __init__(self, name, imagename, description, rarity, level):
         self.name = name
         self.imagename = imagename
         self.description = description
         self.rarity = rarity
+        self.level = level
         if (imagename == None):
             self.image = pygame.Surface((100,100))
             pygame.draw.rect(self.image,(255,255,255),(0,0,100,100))

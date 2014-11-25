@@ -16,12 +16,15 @@ class Inventory(object):
         self.items = []
         self.equippedweapon = None
         self.createImage()
+        self.rightClickDown = False
         '''self.image = pygame.image.load("filename")'''
         '''self.image = pygame.transform.scale(self.image, (self.rect.width,self.rect.height))'''
     def addItem(self, item):
         self.items.append(item)
         self.createImage()
     def removeItem(self, item):
+        if self.equippedweapon == item:
+            self.equippedweapon = None
         self.items.remove(item)
         self.createImage()
     def equipItem(self, index):
@@ -32,9 +35,14 @@ class Inventory(object):
         index = self.getSlot(mx,my)
         if (index is not None) and (index < len(self.items)):
             self.displayStats(index,mx,my)
-            m1,_,_ = pygame.mouse.get_pressed()
+            m1,_,m3 = pygame.mouse.get_pressed()
+            if not m3:
+                self.rightClickDown = False
             if m1:
                 self.equipItem(index)
+            if m3 and self.rightClickDown == False:
+                self.rightClickDown = True
+                self.removeItem(self.items[index])
     def displayStats(self, index, x, y):
         item = self.items[index]
         lines = item.stats

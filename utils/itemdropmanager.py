@@ -52,7 +52,7 @@ def pickupitem(itemdrop, player):
         level = randomizeLevel(itemdrop.level)
         rarity = generateRarity(3)
         wdamage, wrange = generateWeapon(level,rarity)
-        tempsword = sprites.sword.Sword("Pickup Sword", generateWeaponImage(), "Sword from item Drops", wdamage, wrange, rarity)
+        tempsword = sprites.sword.Sword("Pickup Sword", generateWeaponImage(), "Sword from item Drops", wdamage, wrange, rarity, level)
         player.inventory.addItem(tempsword)
 def generateWeapon(level,rarity):
     rnum = random.randrange(100)

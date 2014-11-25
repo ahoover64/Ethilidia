@@ -23,10 +23,10 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         healthsprite.HealthSprite.__init__(self,100)
         self.clicking = False
         self.inventory = inventory.Inventory(screensize)
-        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Standard Sword", 10, 75, 0)
+        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Standard Sword", 10, 75, 0, 0)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
-        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Admin Weapon", 100, 500, 3)
+        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Admin Weapon", 100, 500, 3, 0)
         self.inventory.addItem(otherweapon)
         self.ipressed = False
         self.speed = 5
@@ -72,11 +72,12 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
             self.ipressed = True
         else:
             self.ipressed = False
+        
+        if self.inventory.open:
+            self.inventory.inventoryInteractions()
         currentSpeed = self.speed
         if key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]:
             currentSpeed = self.speed*1.5
-        if self.inventory.open:
-            self.inventory.inventoryInteractions()
         if key[pygame.K_LEFT] or key[pygame.K_a]:
             self.rect.x -= currentSpeed
         if key[pygame.K_RIGHT] or key[pygame.K_d]:

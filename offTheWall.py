@@ -55,13 +55,36 @@ class OffTheWall(object):
             utils.itemdropmanager.dropitem(rect,self.game_data.getGameGlobals()['maprect'],self.sprite_group,self.level)
             '''item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)'''
     def drawhealth(self,cell):
-        if isinstance(cell,sprites.healthsprite.HealthSprite):
+        if isinstance(cell,sprites.healthsprite.HealthSprite) and not isinstance(cell,sprites.player.Player):
             temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)
             temprect2 = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width*cell.health/cell.maxhealth,10)
             colorvalue = cell.health*255/cell.maxhealth
             
             pygame.draw.rect(self.screen,(255-colorvalue,colorvalue,0),self.screen_camera.apply(temprect2))
             pygame.draw.rect(self.screen,(0,0,0),self.screen_camera.apply(temprect),2)
+    def drawHud(self):
+        temprect = pygame.Rect(10,self.game_data.getGameGlobals()['resolution'][1]-40,400,30)
+        temprect2 = pygame.Rect(10,self.game_data.getGameGlobals()['resolution'][1]-40,400*self.player.health/self.player.maxhealth,30)
+        colorvalue = self.player.health*255/self.player.maxhealth
+            
+        pygame.draw.rect(self.screen,(255-colorvalue,colorvalue,0),temprect2)
+        pygame.draw.rect(self.screen,(0,0,0),temprect,5)
+ 
+        basicfont = pygame.font.SysFont(None, 28)
+        if self.level == 0:
+            text = basicfont.render('Level: Town', True, (0,0,0))
+        else:
+            text = basicfont.render('Level: ' + str(self.level), True, (0,0,0))
+        textrect = text.get_rect()
+        textrect.x = 10
+        textrect.y = self.game_data.getGameGlobals()['resolution'][1]-70
+        self.screen.blit(text, textrect)
+        if self.level > 0:
+            text = basicfont.render('Enemies: ' + str(self.enemiesLeft()), True, (0,0,0))
+            textrect = text.get_rect()
+            textrect.x = 100
+            textrect.y = self.game_data.getGameGlobals()['resolution'][1]-70
+            self.screen.blit(text, textrect)
     def setupsounds(self):
         self.soundplayer = utils.soundplayer.SoundPlayer()
         self.soundplayer.addsound("utils/Sounds/hit.wav","hit")
@@ -90,9 +113,9 @@ class OffTheWall(object):
             self.player.rect.x = 10
     def previousLevel(self):
         self.level -= 1
-        if self.level < 1:
-            self.level = 1
-        elif self.level == 1:
+        if self.level < 0:
+            self.level = 0
+        elif self.level == 0:
             self.loadMessage()
             self.generatemap('gamedata/town.json')
             self.player.rect.x = self.game_data.getGameGlobals()['maprect'][0]-self.player.rect.width-10
@@ -127,7 +150,7 @@ class OffTheWall(object):
     def main(self, screen):
 
         ''' Main function for the game '''
-        self.level = 1
+        self.level = 0
         self.currentMaxLevel = 1
         self.maxLevel = 10
         self.generatemap('gamedata/town.json')
@@ -166,6 +189,7 @@ class OffTheWall(object):
             for message in utils.messagemanager.nonabsolutemessages:
                 self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
             utils.messagemanager.resetmessages()
+            self.drawHud()
             pygame.display.flip()
 
 
