@@ -20,7 +20,7 @@
   [
     {"type" : "sprites.obstacle",
      "number" : 30,
-     "image":"gamedata/pictures/house.png", 
+     "image":"gamedata/pictures/rock.png", 
      "randomrect" : [500,500,5500,2500],
      "size":[80,60]
     }

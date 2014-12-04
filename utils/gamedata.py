@@ -7,6 +7,7 @@ import sprites.obstacle
 import sprites.enemy
 import sprites.NPC
 import sprites.questNPC
+import sprites.eventNPC
 import sprites.veteranenemy
 import sprites.assassinenemy
 from collections import defaultdict
@@ -128,6 +129,18 @@ class GameData():
                                 for j in range(self.json_scene[entry][i]['number']):
                                     randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
                                     o = sprites.questNPC.quest_NPC(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.eventNPC":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.eventNPC.eventNPC(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['size'],
