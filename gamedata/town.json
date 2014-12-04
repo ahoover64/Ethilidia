@@ -47,7 +47,7 @@
   [
     {"type" : "sprites.eventNPC",
      "number" : 5,
-     "image" : "pictures/fighter.png",
+     "image" : "gamedata/pictures/drawing.png",
      "randomrect" : [200,200,2000,1500],
      "size" : [50,50]
     }
