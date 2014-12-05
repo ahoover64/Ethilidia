@@ -48,12 +48,10 @@ class OffTheWall(object):
                     self.sprite_group.remove(cell)
                     self.soundplayer.playsound("death")
                     if isinstance(cell,sprites.enemy.Enemy):
-                        self.dropitem(cell.rect)
-    def dropitem(self,rect):
-        rnum = random.randrange(100)
-        if rnum < 50:
-            utils.itemdropmanager.dropitem(rect,self.game_data.getGameGlobals()['maprect'],self.sprite_group,self.level)
-            '''item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)'''
+                        self.dropitem(cell.rect,cell.maxRarityDrop)
+    def dropitem(self,rect,maxRarity):
+        utils.itemdropmanager.dropitem(rect,maxRarity,self.game_data.getGameGlobals()['maprect'],self.sprite_group,self.level)
+        '''item = sprites.itemdrop.ItemDrop(self.level,1,None,(rect.x,rect.y),self.game_data.getGameGlobals()['maprect'],(50,50),self.sprite_group)'''
     def drawhealth(self,cell):
         if isinstance(cell,sprites.healthsprite.HealthSprite) and not isinstance(cell,sprites.player.Player):
             temprect = pygame.Rect(cell.rect.x,cell.rect.y-15,cell.rect.width,10)
@@ -71,6 +69,12 @@ class OffTheWall(object):
         pygame.draw.rect(self.screen,(0,0,0),temprect,5)
  
         basicfont = pygame.font.SysFont(None, 28)
+        healthtext = str(self.player.health) + '/' + str(self.player.maxhealth)
+        text = basicfont.render(healthtext,True,(0,0,0))
+        textrect = text.get_rect()
+        textrect.centerx = 210
+        textrect.centery = self.game_data.getGameGlobals()['resolution'][1]-25
+        self.screen.blit(text,textrect)
         if self.level == 0:
             text = basicfont.render('Level: Town', True, (0,0,0))
         else:
@@ -147,6 +151,10 @@ class OffTheWall(object):
         for cell in self.sprite_group.sprites():
             if isinstance(cell,NPCType):
                 cell.msgs = lines
+    def pause(self):
+        self.paused = True
+    def unpause(self):
+        self.paused = False
     def main(self, screen):
 
         ''' Main function for the game '''
@@ -154,7 +162,7 @@ class OffTheWall(object):
         self.currentMaxLevel = 1
         self.maxLevel = 10
         self.generatemap('gamedata/town.json')
-        
+        self.paused = False
         self.setupsounds()
         clock = pygame.time.Clock()
         basicfont = pygame.font.SysFont(None, 48)
@@ -170,34 +178,36 @@ class OffTheWall(object):
                     return
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_ESCAPE:
                     return
-                if event.type is pygame.KEYDOWN:
+                if event.type is pygame.KEYDOWN and event.key is pygame.K_p:
+                    self.paused = not self.paused
                     pass
             
-            self.sprite_group.update(self.sprite_group,self.soundplayer)
-            self.checkdeath()
+            if not self.paused:
+                self.sprite_group.update(self.sprite_group,self.soundplayer)
+                self.checkdeath()
             
-            self.screen_camera.update(self.player)
-            self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
-            for e in self.sprite_group.sprites():
-                self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
-            for e in self.sprite_group.sprites():
-                self.drawhealth(e)
-            self.player.inventory.displayInventory(self.screen)
+                self.screen_camera.update(self.player)
+                self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
+                for e in self.sprite_group.sprites():
+                    self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
+                for e in self.sprite_group.sprites():
+                    self.drawhealth(e)
+                self.player.inventory.displayInventory(self.screen)
 
-            for message in utils.messagemanager.absolutemessages:
-                self.screen.blit(message.messagebox,message.rect)
-            for message in utils.messagemanager.nonabsolutemessages:
-                self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
-            utils.messagemanager.resetmessages()
-            self.drawHud()
-            pygame.display.flip()
+                for message in utils.messagemanager.absolutemessages:
+                    self.screen.blit(message.messagebox,message.rect)
+                for message in utils.messagemanager.nonabsolutemessages:
+                    self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
+                utils.messagemanager.resetmessages()
+                self.drawHud()
+                pygame.display.flip()
 
 
-            enemies = self.enemiesLeft()
-            if enemies == 0 and self.level == self.currentMaxLevel:
-                self.currentMaxLevel += 1
-                '''play sound'''
-            self.checkPlayerShift()
+                enemies = self.enemiesLeft()
+                if enemies == 0 and self.level == self.currentMaxLevel:
+                    self.currentMaxLevel += 1
+                    '''play sound'''
+                self.checkPlayerShift()
             
 
 if __name__ == '__main__':

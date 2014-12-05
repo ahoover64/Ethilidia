@@ -1,11 +1,13 @@
 import pygame 
+import armor
+import sword
 import item
 import utils.messagemanager
 import utils.message
 class Inventory(object):
 
 
-    def __init__(self, screensize):
+    def __init__(self, screensize, player):
         self.open = False
         self.rows = 6
         self.cols = 10
@@ -15,20 +17,36 @@ class Inventory(object):
         self.rect = pygame.Rect((screensize[0]-self.cols*self.squareside)/2,(screensize[1]-self.rows*self.squareside)/2,self.cols*self.squareside,self.rows*self.squareside)
         self.items = []
         self.equippedweapon = None
+        self.equippedarmor = None
         self.createImage()
         self.rightClickDown = False
         '''self.image = pygame.image.load("filename")'''
         '''self.image = pygame.transform.scale(self.image, (self.rect.width,self.rect.height))'''
+        self.player = player
     def addItem(self, item):
         self.items.append(item)
         self.createImage()
     def removeItem(self, item):
-        if self.equippedweapon == item:
-            self.equippedweapon = None
+        if isinstance(item,sword.Sword):
+            if self.equippedweapon == item:
+                self.equippedweapon = None
+        if isinstance(item,armor.Armor):
+            if self.equippedarmor == item:
+                self.equippedarmor = None
+                self.player.maxhealth = 100
+                self.player.reduction = 0
+                self.player.heal(0)
         self.items.remove(item)
         self.createImage()
     def equipItem(self, index):
-        self.equippedweapon = self.items[index]
+        item = self.items[index]
+        if isinstance(item,sword.Sword):
+            self.equippedweapon = item
+        if isinstance(item,armor.Armor):
+            self.equippedarmor = item
+            self.player.maxhealth = 100+self.equippedarmor.health
+            self.player.reduction = self.equippedarmor.reduction
+            self.player.heal(0)
         self.createImage()
     def inventoryInteractions(self):
         mx,my = pygame.mouse.get_pos()
@@ -46,7 +64,7 @@ class Inventory(object):
     def displayStats(self, index, x, y):
         item = self.items[index]
         lines = item.stats
-        temprect = pygame.Rect(x,y,300,200)
+        temprect = pygame.Rect(x,y,300,item.linenum*40)
         tempmessagebox = utils.messagemanager.createmessage(lines, temprect)
         tempmessage = utils.message.Message(tempmessagebox,temprect)
         utils.messagemanager.addabsolutemessage("weaponmessage",tempmessage)
@@ -71,6 +89,8 @@ class Inventory(object):
             temprect.y = row*self.squareside+self.squareedge
             if tempitem == self.equippedweapon:
                 pygame.draw.rect(self.image, (0,255,0), (col*self.squareside, row*self.squareside, self.squareside, self.squareside))
+            if tempitem == self.equippedarmor:
+                pygame.draw.rect(self.image, (255,255,0), (col*self.squareside, row*self.squareside, self.squareside, self.squareside))
             self.image.blit(tempimage, temprect)
     def findRowCol(self, index):
         row = (int)(index/self.cols)

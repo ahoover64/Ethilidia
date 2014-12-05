@@ -23,6 +23,7 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
         self.level = level
         self.attack = 0.1*level
         self.speed = 2.5
+        self.maxRarityDrop = 3
     def getPlayer(self, game_sprites):
         for cell in game_sprites:
             if isinstance(cell,player.Player):

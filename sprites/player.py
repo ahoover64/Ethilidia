@@ -21,18 +21,18 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         super(Player, self).__init__(filename, position, world_dim,(50,50), *groups)
         animationsprite.AnimationSprite.__init__(self,filename,position,world_dim,(50,50),ssinfo,fps,*groups)
         healthsprite.HealthSprite.__init__(self,100)
-        self.clicking = False
-        self.inventory = inventory.Inventory(screensize)
-        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", "Standard Sword", 10, 75, 0, 0)
+        self.inventory = inventory.Inventory(screensize,self)
+        startweapon = sword.Sword("Simple Sword", "gamedata/pictures/ancientBlade.png", {"Standard Sword"}, 10, 75, 6.0, 0, 0)
         self.inventory.equippedweapon = startweapon
         self.inventory.addItem(startweapon)
-        otherweapon = sword.Sword("Other Sword", "gamedata/pictures/heavyBlade.png", "Admin Weapon", 100, 500, 3, 0)
-        self.inventory.addItem(otherweapon)
         self.ipressed = False
-        self.speed = 5
+        self.speed = 5.0
+        self.ticks_since_attack = 0
+        self.fps = fps
     def createcamera(self,WIN_WIDTH,WIN_HEIGHT):
         self.screen_camera = utils.camera.Camera(utils.camera.complex_camera,self.world_dim[0],self.world_dim[1],WIN_WIDTH,WIN_HEIGHT)
     def swingatmouse(self,mx,my,game_sprites):
+        self.ticks_since_attack = 0
         if self.inventory.equippedweapon == None:
             damage = 0
             wrange = 0
@@ -57,12 +57,14 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
                     cell.damage(damage)
                     hit = True
         return hit
+    def canattack(self):
+        return ((float)(self.ticks_since_attack)/self.fps)>=(1/self.inventory.equippedweapon.attackspeed)
     def update(self, game_sprites,soundplayer):
 
         ''' Moves the player sprite across the screen
             with arrow keys
         '''
-        
+        self.ticks_since_attack += 1
         self.previous = self.rect.copy()
         self.animationTick()
         key = pygame.key.get_pressed()
@@ -75,28 +77,32 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         
         if self.inventory.open:
             self.inventory.inventoryInteractions()
-        currentSpeed = self.speed
+        precisex = self.rect.x
+        precisey = self.rect.y
+        if self.inventory.equippedarmor == None:
+            currentSpeed = self.speed
+        else:
+            currentSpeed = self.speed+self.inventory.equippedarmor.movement
         if key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]:
-            currentSpeed = self.speed*1.5
+            currentSpeed = currentSpeed*1.5
         if key[pygame.K_LEFT] or key[pygame.K_a]:
-            self.rect.x -= currentSpeed
+            precisex -= currentSpeed
         if key[pygame.K_RIGHT] or key[pygame.K_d]:
-            self.rect.x += currentSpeed
+            precisex += currentSpeed
         if key[pygame.K_UP] or key[pygame.K_w]:
-            self.rect.y -= currentSpeed
+            precisey -= currentSpeed
         if key[pygame.K_DOWN] or key[pygame.K_s]:
-            self.rect.y += currentSpeed
+            precisey += currentSpeed
 
+        self.rect.x = round(precisex,0)
+        self.rect.y = round(precisey,0)
         self.rotateForDirection(self.previous,self.rect,180)
         m1,_,_ = pygame.mouse.get_pressed()
         mx,my = pygame.mouse.get_pos()
         hit = False
         if m1:
-            if self.clicking == False:
+            if self.canattack():
                 hit = self.swingatmouse(mx,my,game_sprites)
-            self.clicking = True
-        else:
-            self.clicking = False
         if hit:
             soundplayer.playsound("hit")
         else:

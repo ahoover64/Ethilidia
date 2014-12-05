@@ -17,3 +17,4 @@ class VeteranEnemy(enemy.Enemy):
 
 		healthsprite.HealthSprite.__init__(self,75*level)
 		self.attack = 0.2*level
+                self.maxRarityDrop = 4

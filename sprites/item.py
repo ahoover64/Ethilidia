@@ -8,6 +8,7 @@ class Item(object):
         self.description = description
         self.rarity = rarity
         self.level = level
+        
         if (imagename == None):
             self.image = pygame.Surface((100,100))
             pygame.draw.rect(self.image,(255,255,255),(0,0,100,100))
@@ -23,7 +24,9 @@ class Item(object):
     def createMessage(self):
         lines = []
         lines.append(self.name)
-        lines.append(self.description)
+        for line in self.description:
+            lines.append(line)
+        self.linenum = len(lines)
         return lines
     def giveRarity(self):
         if self.rarity == 0:

@@ -4,12 +4,13 @@ import player
 import utils.itemdropmanager
 class ItemDrop(gamesprite.GameSprite):
 
-    def __init__(self, level, itemtype, imagename, position, world_dim, rectangle, *groups):
+    def __init__(self, level, maxRarity, itemtype, imagename, position, world_dim, rectangle, *groups):
         super(ItemDrop, self).__init__(imagename, position, world_dim, rectangle, *groups)
-        '''0 = health, 1 = weapon'''
+        '''0 = health, 1 = weapon, 2 = armor'''
         self.itemtype = itemtype 
         self.level = level
         self.imagename = imagename
+        self.maxRarity = maxRarity
     def createImage(self, position, rectangle, filename):
         if (filename == None):
             self.image = pygame.Surface((100,100))
