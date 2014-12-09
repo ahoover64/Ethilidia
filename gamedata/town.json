@@ -46,10 +46,37 @@
 "eventNPC":
   [
     {"type" : "sprites.eventNPC",
-     "number" : 5,
-     "image" : "gamedata/pictures/drawing.png",
-     "randomrect" : [200,200,2000,1500],
-     "size" : [50,50]
+     "number" : 1,
+     "image" : "gamedata/pictures/event.png",
+     "randomrect" : [125,0,200,1500],
+     "size" : [1,1]
+    }
+  ],
+"eventNPC1":
+  [
+    {"type" : "sprites.eventNPC1",
+     "number" : 1,
+     "image" : "gamedata/pictures/event.png",
+     "randomrect" : [625,0,700,1500],
+     "size" : [1,1]
+    }
+  ],
+"eventNPC2":
+  [
+    {"type" : "sprites.eventNPC2",
+     "number" : 1,
+     "image" : "gamedata/pictures/event.png",
+     "randomrect" : [1125,0,1200,1500],
+     "size" : [1,1]
+    }
+  ],
+"eventNPC3":
+  [
+    {"type" : "sprites.eventNPC3",
+     "number" : 1,
+     "image" : "gamedata/pictures/event.png",
+     "randomrect" : [1625,0,1700,1500],
+     "size" : [1,1]
     }
   ]
 }

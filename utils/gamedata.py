@@ -8,6 +8,10 @@ import sprites.enemy
 import sprites.NPC
 import sprites.questNPC
 import sprites.eventNPC
+import sprites.eventNPC1
+import sprites.eventNPC2
+import sprites.eventNPC3
+import sprites.eventNPC4
 import sprites.veteranenemy
 import sprites.assassinenemy
 from collections import defaultdict
@@ -141,6 +145,54 @@ class GameData():
                                 for j in range(self.json_scene[entry][i]['number']):
                                     randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
                                     o = sprites.eventNPC.eventNPC(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.eventNPC1":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.eventNPC1.eventNPC1(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.eventNPC2":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.eventNPC2.eventNPC2(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.eventNPC3":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.eventNPC3.eventNPC3(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(o)
+
+                            elif self.json_scene[entry][i]['type'] == "sprites.eventNPC4":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    o = sprites.eventNPC4.eventNPC4(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['size'],

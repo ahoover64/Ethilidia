@@ -6,18 +6,18 @@ import utils.message
 import player
 import math
 import gamesprite
-class eventNPC(gamesprite.GameSprite):
+class eventNPC2(gamesprite.GameSprite):
 
     def __init__(self, filename, position, world_dim, rectangle, *groups):
 
-	super(eventNPC, self).__init__(filename, position, world_dim, rectangle, *groups)
+	super(eventNPC2, self).__init__(filename, position, world_dim, rectangle, *groups)
         self.hasplayer = False
         self.msgs = []
         self.setMsg()
         
     def setMsg(self):
-        self.msgs.append("Your country has been attacked and occupied by an enemy force.")
-	self.msgs.append("You are the liberator of your hometown, and you must free the rest of your country.")
+        self.msgs.append("Hold shift to run faster.")
+	self.msgs.append("The grey circle around you shows your current weapon's range.")
         self.msgRect = pygame.Rect(450,600,800,100)
     def getPlayer(self, game_sprites):
         for cell in game_sprites:

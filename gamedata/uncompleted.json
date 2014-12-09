@@ -25,6 +25,15 @@
      "size":[80,60]
     }
   ],
+"eventNPC4":
+  [
+    {"type" : "sprites.eventNPC4",
+     "number" : 1,
+     "image" : "gamedata/pictures/event.png",
+     "randomrect" : [125,0,200,1500],
+     "size" : [50,50]
+    }
+  ],
 "enemy":
   [
     {"type" : "sprites.enemy",
