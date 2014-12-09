@@ -16,11 +16,20 @@
      "ssinfo":[0,0,4,1,200,200,0,0]
     }
   ],
-"blocks":
+"rock":
   [
     {"type" : "sprites.obstacle",
      "number" : 30,
      "image":"gamedata/pictures/rock.png", 
+     "randomrect" : [500,500,5500,2500],
+     "size":[80,60]
+    }
+  ],
+"ditch":
+  [
+    {"type" : "sprites.obstacle",
+     "number" : 10,
+     "image":"gamedata/pictures/ditch.png", 
      "randomrect" : [500,500,5500,2500],
      "size":[80,60]
     }
