@@ -3,7 +3,7 @@
   [
     {"fps" : 60,
      "resolution" : [1280,720],
-     "maprect" : [6000,3000],
+     "maprect" : [5000,1500],
      "backgroundimage":"gamedata/pictures/map.png",
      "gamemusic":"utils/Sounds/Ending Credits.wav"
     }
@@ -21,7 +21,7 @@
     {"type" : "sprites.obstacle",
      "number" : 30,
      "image":"gamedata/pictures/rock.png", 
-     "randomrect" : [500,500,5500,2500],
+     "randomrect" : [500,10,4500,1500],
      "size":[80,60]
     }
   ],
@@ -30,7 +30,7 @@
     {"type" : "sprites.obstacle",
      "number" : 10,
      "image":"gamedata/pictures/ditch.png", 
-     "randomrect" : [500,500,5500,2500],
+     "randomrect" : [500,10,4500,1500],
      "size":[80,60]
     }
   ],
@@ -46,10 +46,10 @@
 "enemy":
   [
     {"type" : "sprites.enemy",
-     "number" : 50,
+     "number" : 35,
      "image":"gamedata/pictures/Enemy Sprite Sheet.png", 
      "ssinfo":[0,0,4,1,200,200,0,0],
-     "randomrect" : [500,500,5500,2500],
+     "randomrect" : [500,500,4500,1500],
      "size":[50,50]
     }
   ],
@@ -59,7 +59,7 @@
      "number" : 5,
      "image" : "gamedata/pictures/Veteran Enemy Sprite Sheet.png",
      "ssinfo" : [0,0,4,1,200,200,0,0],
-     "randomrect" : [500,500,5500,2500],
+     "randomrect" : [500,500,4500,1500],
      "size" : [75,75]
     }
   ],
@@ -69,7 +69,7 @@
      "number" : 10,
      "image" : "gamedata/pictures/Assassin Sprite Sheet.png",
      "ssinfo" : [0,0,4,1,200,200,0,0],
-     "randomrect" : [500,500,5500,2500],
+     "randomrect" : [500,500,4500,1500],
      "size" : [50,50]
     }
   ]
