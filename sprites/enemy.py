@@ -1,4 +1,4 @@
-import pygame 
+import pygame
 import gamesprite
 import obstacle
 import collisionsprite
@@ -35,7 +35,7 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
         d = math.sqrt(dx*dx+dy*dy)
         return d
     def update(self,game_sprites,soundplayer):
-        
+
         self.animationTick()
         self.previous = self.rect.copy()
         if not self.hasplayer:
@@ -66,4 +66,3 @@ class Enemy(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, he
             if self.distance(self.centerx,self.playercenterx,self.centery,self.playercentery) <= self.rect.width/2+self.playercharacter.rect.width/2:
                 self.playercharacter.damage(self.attack)
         ''' Changes the direction of the sprite if it hits the edge of the screen '''
-

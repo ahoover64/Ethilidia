@@ -1,4 +1,4 @@
-import pygame 
+import pygame
 import gamesprite
 import spritesheet
 import collisionsprite
@@ -74,7 +74,7 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
             self.ipressed = True
         else:
             self.ipressed = False
-        
+
         if self.inventory.open:
             self.inventory.inventoryInteractions()
         precisex = self.rect.x
@@ -110,4 +110,3 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         self.checkEdgeCollisions()
         self.checkCollisions(game_sprites)
         self.fixImage()
-
