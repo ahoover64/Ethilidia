@@ -24,7 +24,7 @@ class AnimationSprite(object):
         self.maxi = len(self.images)
         self.ticks = fps/self.maxi
         self.ticki = 0
-        
+        self.fps = fps
     def spritesheetToImages(self, tempss, startx, starty, rows, cols, width, height,bufferwidth,bufferheight):
         self.tempimages = []
         for y in range(0,rows):

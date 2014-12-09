@@ -14,6 +14,7 @@ import sprites.eventNPC3
 import sprites.eventNPC4
 import sprites.veteranenemy
 import sprites.assassinenemy
+import sprites.boss
 from collections import defaultdict
 
 class GameData():
@@ -235,6 +236,20 @@ class GameData():
                                 for j in range(self.json_scene[entry][i]['number']):
                                     randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
                                     e = sprites.assassinenemy.AssassinEnemy(self.json_scene[entry][i]['image'],
+                                                        randomp,
+                                                        self.game_globals['maprect'],
+                                                        self.json_scene[entry][i]['ssinfo'],
+                                                        self.game_globals['fps'],
+                                                        self.json_scene[entry][i]['size'],
+                                                        self.level,
+                                                        self.sprite_group)
+                                
+                                    
+                                    objects[entry].append(e)
+                            elif self.json_scene[entry][i]['type'] == "sprites.boss":
+                                for j in range(self.json_scene[entry][i]['number']):
+                                    randomp = self.randomOpenPosition(self.json_scene[entry][i]['randomrect'],self.json_scene[entry][i]['size'],self.sprite_group)
+                                    e = sprites.boss.Boss(self.json_scene[entry][i]['image'],
                                                         randomp,
                                                         self.game_globals['maprect'],
                                                         self.json_scene[entry][i]['ssinfo'],

@@ -107,6 +107,10 @@ class OffTheWall(object):
             self.level = self.maxLevel
         elif self.level > self.currentMaxLevel:
             self.level = self.currentMaxLevel
+        elif self.level == self.maxLevel:
+            self.loadMessage()
+            self.generatemap('gamedata/FinalLevel.json')
+            self.player.rect.x = 10
         elif self.level == self.currentMaxLevel:
             self.loadMessage()
             self.generatemap('gamedata/uncompleted.json')
