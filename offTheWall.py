@@ -180,35 +180,41 @@ class OffTheWall(object):
                     return
                 if event.type is pygame.KEYDOWN and event.key is pygame.K_p:
                     self.paused = not self.paused
-                    pass
+                if event.type is pygame.KEYDOWN and event.key is pygame.K_i:
+                    self.player.inventory.open = not self.player.inventory.open
+                    self.paused = self.player.inventory.open
             
             if not self.paused:
                 self.sprite_group.update(self.sprite_group,self.soundplayer)
                 self.checkdeath()
-            
                 self.screen_camera.update(self.player)
-                self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
-                for e in self.sprite_group.sprites():
-                    self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
-                for e in self.sprite_group.sprites():
-                    self.drawhealth(e)
-                self.player.inventory.displayInventory(self.screen)
-
-                for message in utils.messagemanager.absolutemessages:
-                    self.screen.blit(message.messagebox,message.rect)
-                for message in utils.messagemanager.nonabsolutemessages:
-                    self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
-                utils.messagemanager.resetmessages()
-                self.drawHud()
-                pygame.display.flip()
-
-
                 enemies = self.enemiesLeft()
                 if enemies == 0 and self.level == self.currentMaxLevel:
                     self.currentMaxLevel += 1
                     '''play sound'''
                 self.checkPlayerShift()
-            
+
+            self.screen.blit(self.background,self.screen_camera.apply(pygame.Rect(0,0,self.background.get_width(),self.background.get_height())))
+            temprect = pygame.Rect(0,0,0,0)
+            temprect.x = self.player.rect.centerx
+            temprect.y = self.player.rect.centery
+            temprect = self.screen_camera.apply(temprect)
+            pygame.draw.circle(self.screen,(120,120,120),(temprect.x,temprect.y),self.player.inventory.equippedweapon.wrange,1)
+            for e in self.sprite_group.sprites():
+                self.screen.blit(e.image,self.screen_camera.apply(e.imagerect))
+            for e in self.sprite_group.sprites():
+                self.drawhealth(e)
+            self.drawHud()
+            if self.player.inventory.open:
+                self.player.inventory.inventoryInteractions()
+            self.player.inventory.displayInventory(self.screen)
+            for message in utils.messagemanager.absolutemessages:
+                self.screen.blit(message.messagebox,message.rect)
+            for message in utils.messagemanager.nonabsolutemessages:
+                self.screen.blit(message.messagebox,self.screen_camera.apply(message.rect))
+            utils.messagemanager.resetmessages()
+            pygame.display.flip()
+
 
 if __name__ == '__main__':
 

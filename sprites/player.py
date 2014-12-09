@@ -45,18 +45,20 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         tempx = shiftrect.x-(self.rect.x+self.rect.width/2)
         tempy = shiftrect.y-(self.rect.y+self.rect.height/2)
         norm = math.sqrt(tempx*tempx+tempy*tempy)
-        normx = tempx/norm
-        normy = tempy/norm
-        rect = pygame.Rect(normx*wrange/2-wrange/2,normy*wrange/2-wrange/2,wrange,wrange)
-        rect.x += self.rect.x+self.rect.width/2
-        rect.y += self.rect.y+self.rect.height/2
-        hit = False
-        for cell in game_sprites:
-            if isinstance(cell,healthsprite.HealthSprite) and not cell == self:
-                if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
-                    cell.damage(damage)
-                    hit = True
-        return hit
+        if not norm == 0:
+            normx = tempx/norm
+            normy = tempy/norm
+            rect = pygame.Rect(normx*wrange/2-wrange/2,normy*wrange/2-wrange/2,wrange,wrange)
+            rect.x += self.rect.x+self.rect.width/2
+            rect.y += self.rect.y+self.rect.height/2
+            hit = False
+            for cell in game_sprites:
+                if isinstance(cell,healthsprite.HealthSprite) and not cell == self:
+                    if (rect.x + rect.width > cell.rect.x) and (rect.x < cell.rect.x + cell.rect.width) and (rect.y + rect.height > cell.rect.y) and (rect.y < cell.rect.y + cell.rect.height):
+                        cell.damage(damage)
+                        hit = True
+            return hit
+        return False
     def canattack(self):
         return ((float)(self.ticks_since_attack)/self.fps)>=(1/self.inventory.equippedweapon.attackspeed)
     def update(self, game_sprites,soundplayer):
@@ -68,15 +70,8 @@ class Player(collisionsprite.CollisionSprite, animationsprite.AnimationSprite, h
         self.previous = self.rect.copy()
         self.animationTick()
         key = pygame.key.get_pressed()
-        if key[pygame.K_i]:
-            if self.ipressed == False:
-                self.inventory.open = not self.inventory.open
-            self.ipressed = True
-        else:
-            self.ipressed = False
+        
 
-        if self.inventory.open:
-            self.inventory.inventoryInteractions()
         precisex = self.rect.x
         precisey = self.rect.y
         if self.inventory.equippedarmor == None:
